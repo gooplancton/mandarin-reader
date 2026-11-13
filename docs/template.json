@@ -1,0 +1,43 @@
+{
+  "format": "mandarin-reader/segmented-text",
+  "version": 1,
+  "meta": {
+    "id": "my-first-text",
+    "title": "我的第一篇课文",
+    "titleTranslation": "My first text",
+    "language": "zh-Hans",
+    "level": { "system": "HSK", "value": "2" },
+    "author": "Your name"
+  },
+  "body": [
+    { "type": "heading", "tokens": "我 的 周末" },
+    { "type": "paragraph", "tokens": "上 个 周末 ， 我 和 朋友 去 了 一 家 新 开 的 咖啡店 。 那里 的 咖啡 好喝·极了 ！" },
+    { "type": "paragraph", "tokens": ["我们", "聊", "了", "很", "久", "，", { "w": "差不多", "soft": [1] }, "三", "个", "小时", "。"] }
+  ],
+  "dictionary": {
+    "我": { "py": "wǒ", "pos": "pron", "en": ["I", "me"] },
+    "的": { "py": "de", "pos": "part", "en": ["(possessive / attributive particle)"] },
+    "周末": { "py": "zhōumò", "pos": "n", "en": ["weekend"] },
+    "上": { "py": "shàng", "pos": "loc", "en": ["last (week, weekend…)", "previous"] },
+    "个": { "py": "gè", "pos": "mw", "en": ["(general measure word)"] },
+    "和": { "py": "hé", "pos": "conj", "en": ["and", "with"] },
+    "朋友": { "py": "péngyou", "pos": "n", "en": ["friend"] },
+    "去": { "py": "qù", "pos": "v", "en": ["to go"] },
+    "了": { "py": "le", "pos": "part", "en": ["(completed action / change of state)"] },
+    "一": { "py": "yī", "pos": "num", "en": ["one", "a"] },
+    "家": { "py": "jiā", "pos": "mw", "en": ["(measure word for shops)"] },
+    "新": { "py": "xīn", "pos": "adj", "en": ["new", "newly"] },
+    "开": { "py": "kāi", "pos": "v", "en": ["to open"] },
+    "咖啡店": { "py": "kāfēidiàn", "pos": "n", "en": ["café", "coffee shop"] },
+    "那里": { "py": "nàlǐ", "pos": "pron", "en": ["there"] },
+    "咖啡": { "py": "kāfēi", "pos": "n", "en": ["coffee"] },
+    "好喝极了": { "py": "hǎohē jíle", "pos": "adj", "en": ["extremely tasty (of drinks)"], "parts": ["好喝", "极了"] },
+    "我们": { "py": "wǒmen", "pos": "pron", "en": ["we", "us"] },
+    "聊": { "py": "liáo", "pos": "v", "en": ["to chat"] },
+    "很": { "py": "hěn", "pos": "adv", "en": ["very"] },
+    "久": { "py": "jiǔ", "pos": "adj", "en": ["long (time)"] },
+    "差不多": { "py": "chàbuduō", "pos": "adv", "en": ["almost", "about"] },
+    "三": { "py": "sān", "pos": "num", "en": ["three"] },
+    "小时": { "py": "xiǎoshí", "pos": "n", "en": ["hour"] }
+  }
+}

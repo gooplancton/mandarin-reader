@@ -35,9 +35,27 @@
     warnings: $('#warnings'),
   };
 
-  /** All available raw documents, by id. */
+  /** All available raw documents, by id. Built-in texts first, then the user's uploads. */
   const library = new Map();
-  (window.MR_LIBRARY || []).forEach((d) => library.set(d.meta.id, d));
+  const builtIn = new Set();
+  (window.MR_LIBRARY || []).forEach((d) => {
+    library.set(d.meta.id, d);
+    builtIn.add(d.meta.id);
+  });
+
+  // Uploaded texts are kept in this browser (localStorage) so they survive reloads.
+  const USER_KEY = 'mr:userTexts';
+  const userTexts = store.get(USER_KEY, {});
+  Object.keys(userTexts).forEach((id) => library.set(id, userTexts[id]));
+
+  function saveUserTexts() {
+    try {
+      localStorage.setItem(USER_KEY, JSON.stringify(userTexts));
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
 
   let reader = null;
   let current = null; // normalized doc
@@ -47,14 +65,23 @@
 
   function refreshSelect(activeId) {
     els.select.innerHTML = '';
+    const groups = { builtin: null, user: null };
     for (const [id, d] of library) {
+      const kind = builtIn.has(id) ? 'builtin' : 'user';
+      if (!groups[kind]) {
+        groups[kind] = document.createElement('optgroup');
+        groups[kind].label = kind === 'builtin' ? 'Example texts' : 'Your texts';
+        els.select.appendChild(groups[kind]);
+      }
       const o = document.createElement('option');
       o.value = id;
-      const lvl = d.meta.level ? ` · ${d.meta.level.system || ''}${d.meta.level.value || ''}` : '';
-      o.textContent = d.meta.title + lvl;
-      els.select.appendChild(o);
+      const m = d.meta || {};
+      const lvl = m.level ? ` · ${m.level.system || ''}${m.level.value || ''}` : '';
+      o.textContent = (m.title || id) + lvl;
+      groups[kind].appendChild(o);
     }
     if (activeId) els.select.value = activeId;
+    $('#btn-remove').hidden = !activeId || builtIn.has(activeId);
   }
 
   function open(id) {
@@ -73,6 +100,7 @@
     closeFinish();
     current = doc;
     store.set('mr:lastText', id);
+    $('#btn-remove').hidden = builtIn.has(id);
     renderMeta(doc.meta);
     reader = new MRReader(els.reader, doc, {
       onChange: updateStats,
@@ -99,19 +127,66 @@
 
   els.select.addEventListener('change', () => open(els.select.value));
 
-  els.file.addEventListener('change', async () => {
-    const f = els.file.files[0];
-    els.file.value = '';
-    if (!f) return;
+  /** Validate an uploaded file, add it to "Your texts", and open it. */
+  async function importFile(f) {
     try {
       const raw = JSON.parse(await f.text());
-      const doc = MRFormat.normalize(raw); // validate before adding
-      library.set(doc.meta.id, Object.assign({}, raw, { meta: doc.meta }));
-      refreshSelect(doc.meta.id);
-      open(doc.meta.id);
+      const doc = MRFormat.normalize(raw); // throws on fatal problems
+      let id = doc.meta.id;
+      if (builtIn.has(id)) id = id + '-uploaded'; // never shadow an example text
+      const meta = Object.assign({}, doc.meta, { id });
+      const stored = Object.assign({}, raw, { meta });
+      library.set(id, stored);
+      userTexts[id] = stored;
+      const saved = saveUserTexts();
+      refreshSelect(id);
+      open(id);
+      const notes = doc.warnings.slice();
+      if (!saved) notes.unshift(`“${meta.title}” is open, but this browser could not save it — it will be gone after a reload.`);
+      if (notes.length) showWarnings(notes);
+      else toast(`Added “${meta.title}”`);
     } catch (err) {
       showWarnings([`Could not open ${f.name}: ${err.message || err}`]);
     }
+  }
+
+  els.file.addEventListener('change', () => {
+    const files = [...els.file.files];
+    els.file.value = '';
+    files.forEach(importFile);
+  });
+
+  // Drag a .json file anywhere onto the page.
+  document.addEventListener('dragover', (e) => {
+    if (e.dataTransfer && [...e.dataTransfer.types].includes('Files')) {
+      e.preventDefault();
+      document.body.classList.add('dragging');
+    }
+  });
+  document.addEventListener('dragleave', (e) => {
+    if (!e.relatedTarget) document.body.classList.remove('dragging');
+  });
+  document.addEventListener('drop', (e) => {
+    document.body.classList.remove('dragging');
+    if (!e.dataTransfer || !e.dataTransfer.files.length) return;
+    e.preventDefault();
+    [...e.dataTransfer.files].forEach(importFile);
+  });
+
+  $('#btn-remove').addEventListener('click', () => {
+    const id = els.select.value;
+    if (builtIn.has(id) || !library.has(id)) return;
+    const title = (library.get(id).meta || {}).title || id;
+    if (!confirm(`Remove “${title}” from this browser? Your progress on it will be deleted too.`)) return;
+    library.delete(id);
+    delete userTexts[id];
+    saveUserTexts();
+    try {
+      localStorage.removeItem('mr:progress:' + id);
+    } catch (_) {}
+    const next = library.keys().next().value;
+    refreshSelect(next);
+    if (next) open(next);
   });
 
   // ------------------------------------------------------------ stats
@@ -322,5 +397,5 @@
   const startId = library.has(first) ? first : library.keys().next().value;
   refreshSelect(startId);
   if (startId) open(startId);
-  else showWarnings(['No texts found. Use “Open…” to load a .json text file.']);
+  else showWarnings(['No texts found. Use “Upload…” to add a .json text file.']);
 })();

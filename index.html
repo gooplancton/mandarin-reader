@@ -12,9 +12,10 @@
     <div class="row">
       <span class="brand" lang="zh">断词</span>
       <select id="text-select" aria-label="Choose a text"></select>
-      <label class="btn" title="Open a text file (.json)">
-        Open…<input id="file-input" type="file" accept=".json,application/json" hidden>
+      <label class="btn" title="Add your own text (.json in the Mandarin Reader format)">
+        Upload…<input id="file-input" type="file" accept=".json,application/json" multiple hidden>
       </label>
+      <button id="btn-remove" class="btn icon" title="Remove this uploaded text" aria-label="Remove this uploaded text" hidden>🗑</button>
     </div>
     <div class="row stats">
       <span class="stat" title="Words segmented"><b id="stat-words">0</b> words</span>
@@ -41,8 +42,15 @@
       Tap the <strong>last character</strong> of each word as you read. You can jump several words at once —
       only a tap in the middle of a word is a slip. Tap a word you've already read to see what it means.
     </p>
+    <p class="help">
+      <strong>Your own texts:</strong> use <em>Upload…</em> or drop a <code>.json</code> file on the page.
+      Uploaded texts stay in this browser only — nothing is sent anywhere.
+      See the <a href="https://github.com/gooplancton/mandarin-reader/blob/main/docs/FORMAT.md" target="_blank" rel="noopener">text format</a>
+      and start from the <a href="docs/template.json" download>template</a>.
+    </p>
   </main>
 
+  <div id="drop-hint" aria-hidden="true">Drop a .json text to add it</div>
   <div id="fx-layer" aria-hidden="true"></div>
   <div id="toast" role="status"></div>
 

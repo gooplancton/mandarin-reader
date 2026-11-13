@@ -233,6 +233,27 @@ main {
 }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+.help a { color: var(--accent); }
+.help code { font-size: 12px; }
+
+#drop-hint {
+  position: fixed;
+  inset: 12px;
+  display: grid;
+  place-items: center;
+  border: 3px dashed var(--accent);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  color: var(--accent);
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  z-index: 60;
+}
+body.dragging #drop-hint { opacity: 1; }
+
 /* ------------------------------------------------------------ word sheet */
 
 .sheet {

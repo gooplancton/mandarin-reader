@@ -19,7 +19,19 @@ like ticking word boundaries with a pencil.
   words you split).
 - Hint (💡), undo (↶ / Ctrl+Z), text size, and progress saved in the browser.
 
-## Run it
+## Live site
+
+Hosted on GitHub Pages: **https://gooplancton.github.io/mandarin-reader/**
+
+### Reading your own texts
+
+Click **Upload…**, or drop one or more `.json` files onto the page. Uploaded
+texts appear under *Your texts* in the menu. They are stored only in your
+browser's local storage, are never sent to a server, and can be deleted with 🗑.
+Start from [`docs/template.json`](docs/template.json), and see
+[docs/FORMAT.md](docs/FORMAT.md) for the full format.
+
+## Run it locally
 
 No build step and no dependencies. Open `index.html` in a browser, or serve the folder:
 
