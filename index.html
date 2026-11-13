@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f1e7">
+  <title>Mandarin Reader</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="row">
+      <span class="brand" lang="zh">断词</span>
+      <select id="text-select" aria-label="Choose a text"></select>
+      <label class="btn" title="Open a text file (.json)">
+        Open…<input id="file-input" type="file" accept=".json,application/json" hidden>
+      </label>
+    </div>
+    <div class="row stats">
+      <span class="stat" title="Words segmented"><b id="stat-words">0</b> words</span>
+      <span class="stat" title="Words in a row without a mistake">🔥<b id="stat-streak">0</b></span>
+      <span class="stat bad" title="Slips: taps in the middle of a word">✗<b id="stat-mistakes">0</b></span>
+      <span class="stat" title="Correct taps / all taps"><b id="stat-accuracy">–</b></span>
+      <span class="spacer"></span>
+      <span class="tools">
+        <button id="btn-hint" class="btn icon" title="Briefly show the next word" aria-label="Hint">💡</button>
+        <button id="btn-undo" class="btn icon" title="Undo last advance (Ctrl+Z)" aria-label="Undo">↶</button>
+        <button id="btn-font-down" class="btn icon" title="Smaller text" aria-label="Smaller text">A−</button>
+        <button id="btn-font-up" class="btn icon" title="Larger text" aria-label="Larger text">A+</button>
+        <button id="btn-reset" class="btn icon" title="Start again" aria-label="Start again">↺</button>
+      </span>
+    </div>
+    <div class="progress"><div id="progress-bar"></div></div>
+  </header>
+
+  <main>
+    <pre id="warnings" class="warnings" hidden></pre>
+    <p id="text-meta" class="text-meta"></p>
+    <article id="reader" class="reader" aria-label="Text"></article>
+    <p class="help">
+      Tap the <strong>last character</strong> of each word as you read. You can jump several words at once —
+      only a tap in the middle of a word is a slip. Tap a word you've already read to see what it means.
+    </p>
+  </main>
+
+  <div id="fx-layer" aria-hidden="true"></div>
+  <div id="toast" role="status"></div>
+
+  <aside id="word-sheet" class="sheet" aria-hidden="true">
+    <button id="ws-close" class="sheet-close" aria-label="Close">×</button>
+    <div class="ws-head">
+      <span id="ws-hanzi" class="ws-hanzi" lang="zh"></span>
+      <span id="ws-pinyin" class="ws-pinyin"></span>
+      <button id="ws-speak" class="btn icon" title="Pronounce" aria-label="Pronounce">🔊</button>
+      <span id="ws-tag" class="tag" hidden></span>
+    </div>
+    <ol id="ws-defs" class="ws-defs"></ol>
+    <p id="ws-parts" class="ws-parts" lang="zh" hidden></p>
+    <p id="ws-notes" class="ws-notes" hidden></p>
+  </aside>
+
+  <div id="finish" class="modal" role="dialog" aria-labelledby="finish-title">
+    <div class="modal-card">
+      <h2 id="finish-title"><span lang="zh">读完了！</span> Finished</h2>
+      <div class="grid">
+        <div><b id="f-words"></b><span>words</span></div>
+        <div><b id="f-mistakes"></b><span>slips</span></div>
+        <div><b id="f-accuracy"></b><span>accuracy</span></div>
+        <div><b id="f-chunk"></b><span>words / tap</span></div>
+        <div><b id="f-best"></b><span>best streak</span></div>
+        <div><b id="f-time"></b><span>time</span></div>
+        <div><b id="f-speed"></b><span>chars / min</span></div>
+      </div>
+      <div id="f-missed-wrap">
+        <h3>Words you split</h3>
+        <ul id="f-missed" class="missed-list" lang="zh"></ul>
+      </div>
+      <div class="actions">
+        <button id="f-review" class="btn">Review text</button>
+        <button id="f-restart" class="btn primary">Read again</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/format.js"></script>
+  <script src="texts/library.js"></script>
+  <script src="js/reader.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
