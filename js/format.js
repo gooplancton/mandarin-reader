@@ -123,6 +123,25 @@
     return Object.assign({}, e, { en });
   }
 
+  /*
+   * Semantic weight (0..1) of a word, used to fade function words in read text.
+   * Precedence: token "weight" > dictionary entry "weight" > POS default > 1.
+   */
+  const POS_WEIGHT = {
+    n: 1, v: 1, adj: 1, idiom: 1, name: 1,
+    adv: 0.6, num: 0.6, pron: 0.6, time: 0.6, conj: 0.6, aux: 0.6,
+    part: 0.2, mw: 0.25, prep: 0.3, loc: 0.3, comp: 0.3,
+  };
+
+  function weightOf(dictionary, token) {
+    const clamp = (x) => Math.max(0, Math.min(1, x));
+    if (token.raw && typeof token.raw.weight === 'number') return clamp(token.raw.weight);
+    const e = token.key && dictionary[token.key];
+    if (e && typeof e.weight === 'number') return clamp(e.weight);
+    if (e && e.pos in POS_WEIGHT) return POS_WEIGHT[e.pos];
+    return 1;
+  }
+
   function hashString(s) {
     let h = 2166136261;
     for (let i = 0; i < s.length; i++) {
@@ -132,5 +151,5 @@
     return (h >>> 0).toString(36);
   }
 
-  global.MRFormat = { FORMAT_ID, SUPPORTED_MAJOR, normalize, lookup, isPunctuation, parseShorthandToken };
+  global.MRFormat = { FORMAT_ID, SUPPORTED_MAJOR, POS_WEIGHT, normalize, lookup, weightOf, isPunctuation, parseShorthandToken };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -4,8 +4,11 @@ A Chinese reading game. While you read, tap the **last character of each word**,
 like ticking word boundaries with a pencil.
 
 - A correct tap marks everything up to that point as read. The read text is
-  shown split into words, with alternating tints and a small pencil tick after
-  each word.
+  shown split into words.
+- Each read word gets a bracket underneath (└──┘) marking where it starts and
+  ends. Read words also fade according to how much meaning they carry: nouns,
+  verbs, adjectives and idioms stay vivid, while particles, measure words and
+  prepositions fade (driven by `pos` / `weight` in the text file).
 - You can skip ahead: one tap at the end of a phrase reads every word before it.
   Only a tap **in the middle of a word** counts as a slip.
 - The page scrolls by itself, so the place you're reading stays at a comfortable height.

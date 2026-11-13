@@ -87,6 +87,8 @@
             el: document.createElement('span'),
           };
           tok.el.className = tok.punct ? 'tok punct' : 'tok';
+          tok.weight = tok.punct ? 0.3 : MRFormat.weightOf(this.doc.dictionary, t);
+          tok.el.style.setProperty('--w', tok.weight);
           tok.el.dataset.t = this.tokens.length;
           t.chars.forEach((ch) => {
             const c = document.createElement('span');

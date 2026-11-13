@@ -8,9 +8,8 @@
   --line: #e4dccd;
   --accent: #2f7d5b;
   --accent-soft: #d9eee3;
-  --seg-a: rgba(47, 125, 91, 0.11);
-  --seg-b: rgba(62, 104, 168, 0.11);
-  --tick: rgba(80, 70, 55, 0.55);
+  --bracket: rgba(80, 70, 55, 0.45);
+  --ink-floor: 22%;
   --bad: #c2453d;
   --bad-soft: rgba(194, 69, 61, 0.18);
   --hint: #d99a1e;
@@ -28,9 +27,8 @@
     --line: #3a3732;
     --accent: #5cc493;
     --accent-soft: #24392f;
-    --seg-a: rgba(92, 196, 147, 0.14);
-    --seg-b: rgba(120, 160, 230, 0.14);
-    --tick: rgba(230, 220, 200, 0.5);
+    --bracket: rgba(230, 220, 200, 0.4);
+  --ink-floor: 28%;
     --bad: #ef6b62;
     --bad-soft: rgba(239, 107, 98, 0.22);
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -149,25 +147,21 @@ main {
 /* chars stay plain inline text so the browser keeps CJK line-breaking rules (no line starting with ，。) */
 .ch { position: relative; cursor: pointer; }
 
-/* read text */
+/* read text: brightness follows semantic weight (--w, 0..1, set per word) */
 .ch.read { color: var(--ink-read); }
-.tok.read.even { background: var(--seg-a); }
-.tok.read.odd { background: var(--seg-b); }
-.tok.punct.read { background: none; }
-/* pencil tick after the last character of each read word (on the char, so wrapped words stay correct) */
-.tok.read:not(.punct) > .ch:last-child::after {
-  content: "";
-  position: absolute;
-  right: -1px;
-  bottom: 0.18em;
-  height: 0.55em;
-  width: 2px;
-  border-radius: 1px;
-  background: var(--tick);
-  transform: rotate(14deg);
-  pointer-events: none;
+.ch.read { color: color-mix(in srgb, var(--ink) calc(var(--ink-floor) + var(--w, 1) * (100% - var(--ink-floor))), var(--bg)); }
+
+/* bracket under each read word:  └────┘  (drawn with backgrounds, so layout never shifts;
+   a word that wraps across lines gets one bracket opened on the first line and closed on the last) */
+.tok.read:not(.punct) {
+  padding-bottom: 0.12em;
+  --b: var(--bracket);
+  background:
+    linear-gradient(var(--b), var(--b)) left 0.1em bottom 0 / calc(100% - 0.2em) 2px no-repeat,
+    linear-gradient(var(--b), var(--b)) left 0.1em bottom 0 / 2px 0.28em no-repeat,
+    linear-gradient(var(--b), var(--b)) right 0.1em bottom 0 / 2px 0.28em no-repeat;
 }
-.tok.read.missed { text-decoration: underline dotted var(--bad); text-underline-offset: 0.28em; text-decoration-thickness: 2px; }
+.tok.read.missed { --b: var(--bad); }
 .tok.selected { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 /* the next character to read */

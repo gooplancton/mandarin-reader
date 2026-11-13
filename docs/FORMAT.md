@@ -73,7 +73,8 @@ Each item is either a shorthand string as above, or an object:
   "w": "银行",        // required: the text exactly as displayed
   "d": "银行",        // optional dictionary key (default: same as w)
   "soft": [1],        // optional: positions inside w (in characters) where a tap is also correct
-  "punct": false      // optional: force punctuation status (default: guessed — no letters or digits)
+  "punct": false,     // optional: force punctuation status (default: guessed — no letters or digits)
+  "weight": 0.4       // optional: semantic weight for this occurrence (overrides the dictionary)
   // future, e.g.: "ruby": "yínháng", "ne": "place", "x-audio": [12.3, 12.9]
 }
 ```
@@ -89,6 +90,8 @@ the loader warns about missing ones.
 ```jsonc
 "不起眼": {
   "py": "bù qǐyǎn",                   // pinyin with tone marks
+  "pos": "adj",                       // part of speech (see below)
+  "weight": 0.55,                     // optional: semantic weight 0..1, overrides the POS default
   "en": ["inconspicuous", "unremarkable"],   // string or array of glosses
   "parts": ["不", "起眼"],             // optional: shown under the gloss
   "hsk": "6",                         // optional level tag
@@ -96,6 +99,23 @@ the loader warns about missing ones.
   // future: "trad", "zhuyin", "examples", "audio", "freq", other languages ("de", "es"…)
 }
 ```
+
+### Parts of speech and semantic weight
+
+The reader fades function words in text that's already read, so content words
+stand out. A word's weight (0–1) comes from, in order: the token's `weight`,
+the entry's `weight`, the default for the entry's `pos`, and otherwise 1.
+
+| `pos` | meaning | default weight |
+|-------|---------|----------------|
+| `n` `v` `adj` `idiom` `name` | noun, verb, adjective, chengyu/set phrase, proper name | 1 |
+| `adv` `num` `pron` `time` `conj` `aux` | adverb, numeral, pronoun/determiner, time word, conjunction, modal | 0.6 |
+| `prep` `loc` `comp` | preposition, locative (里, 上…), resultative/directional complement | 0.3 |
+| `mw` | measure word | 0.25 |
+| `part` | particle (的, 了, 着, 吗…) | 0.2 |
+
+Use `weight` on an entry for words whose POS overstates them. For example, 是
+and 有 are verbs but carry little meaning, so they get 0.55.
 
 ## Game rules
 
