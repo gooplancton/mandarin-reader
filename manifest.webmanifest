@@ -1,0 +1,23 @@
+{
+  "name": "断词 Mandarin Reader",
+  "short_name": "断词",
+  "description": "Read Chinese by marking where each word ends; save words with their sentence as flashcards.",
+  "id": "./",
+  "start_url": "./#/library",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f6f1e7",
+  "theme_color": "#2f7d5b",
+  "lang": "en",
+  "categories": ["education", "books"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Study flashcards", "url": "./#/review", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Continue reading", "url": "./#/read", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

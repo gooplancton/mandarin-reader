@@ -127,8 +127,9 @@ and 有 are verbs but carry little meaning, so they get 0.55.
 - Any other tap on unread text is a **slip**.
 - Tapping text that's already read shows the dictionary entry.
 
-## Bundling for `file://`
+## Built-in texts
 
-Browsers block `fetch()` on pages opened straight from disk, so
-`node tools/bundle-texts.mjs` packs every `texts/*.json` into `texts/library.js`.
-You can also load any file at runtime with **Open…**.
+Example texts live in `texts/*.json`. `node tools/build.mjs` bundles them into
+`texts/library.js`, which the app imports. Users add their own texts with
+**Upload text** in the library. Uploaded texts are validated and stored on the
+device (IndexedDB).

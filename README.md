@@ -1,61 +1,77 @@
-# Mandarin Reader (断词) — proof of concept
+# 断词 Mandarin Reader
 
-A Chinese reading game. While you read, tap the **last character of each word**,
-like ticking word boundaries with a pencil.
+A Chinese reading app. While you read, tap the **last character of each word**,
+like ticking word boundaries with a pencil. Save the words you look up as
+flashcards, together with the sentence you found them in.
 
-- A correct tap marks everything up to that point as read. The read text is
-  shown split into words.
-- Each read word gets a bracket underneath (└──┘) marking where it starts and
-  ends. Read words also fade according to how much meaning they carry: nouns,
-  verbs, adjectives and idioms stay vivid, while particles, measure words and
-  prepositions fade (driven by `pos` / `weight` in the text file).
+**Live app:** https://gooplancton.github.io/mandarin-reader/. To install it,
+use *Add to Home Screen* on iOS/Android, or the install icon in the address bar
+in Chrome/Edge. It works offline.
+
+## Sections
+
+### 📚 My library
+- Example texts and your own uploaded texts, with reading progress
+  (Not started, 37% read, Finished).
+- **Upload text**, or drop `.json` files anywhere on the page. The format is in
+  [docs/FORMAT.md](docs/FORMAT.md); start from [`docs/template.json`](docs/template.json).
+- Per-text menu: reset progress, remove an uploaded text.
+- **Download backup / Restore backup**: a single JSON file with all your texts,
+  progress and cards.
+
+### 读 Read
+- A correct tap marks everything up to that point as read. Each read word gets a
+  bracket underneath (└──┘), and fades according to how much meaning it carries:
+  content words stay vivid, particles and measure words fade.
 - You can skip ahead: one tap at the end of a phrase reads every word before it.
   Only a tap **in the middle of a word** counts as a slip.
-- The page scrolls by itself, so the place you're reading stays at a comfortable height.
-- Tap any word you've already read to see its pinyin and meaning. A 🔊 button
-  pronounces it if the browser supports speech.
+- The page scrolls by itself to keep your reading position at a comfortable height.
+- Tap a word you've already read to see its pinyin, meanings and the sentence
+  it's in, then **＋ Add to cards**. If the word already has a card, the button
+  adds this sentence to that card instead.
 - You get feedback as you go: praise for chunks of words, streak milestones,
-  slip markers, and a summary at the end (accuracy, words per tap, speed, the
-  words you split).
-- Hint (💡), undo (↶ / Ctrl+Z), text size, and progress saved in the browser.
+  slip markers, and a summary at the end. The summary can add every word you
+  split straight to your cards.
 
-## Live site
+### 🗂 Cards
+- One card per word: characters, pinyin, meanings, and up to 5 context
+  sentences (quoted as they appeared, with the word highlighted, plus the title
+  of the text).
+- **Study**: the front shows the word and a context sentence. The answer adds
+  pinyin (🔊 to hear it) and meanings. You grade each card *Again / Hard / Good / Easy*
+  (keys 1–4, space to reveal). The scheduler is a variant of SM-2, Anki's
+  algorithm. You can set how many new cards to introduce per day.
+- Search by characters, pinyin (tone marks optional), meaning or sentence; delete
+  cards or sentences.
+- **Export**: a tab-separated file Anki can import (Hanzi, Pinyin, Meaning, Context, Source).
 
-Hosted on GitHub Pages: **https://gooplancton.github.io/mandarin-reader/**
+All data stays on the device (IndexedDB). Nothing is sent to a server.
 
-### Reading your own texts
+## Development
 
-Click **Upload…**, or drop one or more `.json` files onto the page. Uploaded
-texts appear under *Your texts* in the menu. They are stored only in your
-browser's local storage, are never sent to a server, and can be deleted with 🗑.
-Start from [`docs/template.json`](docs/template.json), and see
-[docs/FORMAT.md](docs/FORMAT.md) for the full format.
-
-## Run it locally
-
-No build step and no dependencies. Open `index.html` in a browser, or serve the folder:
+No dependencies and no framework: plain ES modules served as static files.
 
 ```sh
-python3 -m http.server 8000   # then open http://localhost:8000
+node tools/build.mjs            # after changing ANY file: bundles texts, updates sw.js
+python3 -m http.server 8000     # then open http://localhost:8000
 ```
 
-## Texts
-
-- `texts/xiangzi-shudian.json`: *巷子里的旧书店*, an original HSK 6-level essay
-  (562 characters, 329 words, 206 dictionary entries).
-- The text format is described in [docs/FORMAT.md](docs/FORMAT.md).
-- After adding or editing a text, run `node tools/bundle-texts.mjs` so it shows
-  up when the page is opened from disk. You can also load a file at any time
-  with **Open…**.
-
-## Layout
+Run `tools/build.mjs` before committing. It writes the file list and a content
+hash into `sw.js`, and that hash is how installed copies notice a new version
+(they show a *Reload* prompt).
 
 ```
-index.html          app shell
-css/style.css       styles (light/dark)
-js/format.js        format loader & validator (MRFormat)
-js/reader.js        game engine: cursor, boundaries, rendering, autoscroll (MRReader)
-js/app.js           UI glue: library, stats, word sheet, finish screen
-texts/*.json        texts; texts/library.js is generated
-tools/bundle-texts.mjs
+index.html              app shell (all views) + tab bar
+manifest.webmanifest    PWA manifest          sw.js   offline cache (generated list)
+css/style.css           styles (light/dark)
+js/main.js              router, tab badge, drag-and-drop, service worker registration
+js/views/               library.js · read.js · cards.js · review.js
+js/reader.js            segmentation game engine (cursor, boundaries, autoscroll, sentence context)
+js/format.js            text format loader & validator
+js/library.js           built-in + uploaded texts, progress
+js/flashcards.js        cards, contexts, daily limits, Anki export
+js/srs.js               spaced-repetition scheduler
+js/db.js                IndexedDB storage, backup/restore, migration from the first prototype
+texts/*.json            example texts (bundled into texts/library.js)
+tools/build.mjs         build step
 ```
