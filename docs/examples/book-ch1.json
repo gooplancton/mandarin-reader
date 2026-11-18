@@ -1,0 +1,109 @@
+{
+  "format": "mandarin-reader/segmented-text",
+  "version": 1,
+  "meta": {
+    "id": "example-kitten-1",
+    "title": "找到小猫",
+    "titleTranslation": "Finding a kitten",
+    "language": "zh-Hans",
+    "level": {
+      "system": "HSK",
+      "value": "2"
+    },
+    "book": {
+      "id": "example-kitten",
+      "title": "小猫回家",
+      "titleTranslation": "The Kitten Goes Home",
+      "author": "Mandarin Reader examples"
+    },
+    "chapter": {
+      "number": 1,
+      "title": "找到小猫"
+    },
+    "license": "CC0"
+  },
+  "body": [
+    {
+      "type": "heading",
+      "tokens": "找到 小猫"
+    },
+    {
+      "type": "paragraph",
+      "tokens": "星期六 早上 ， 小明 一 个 人 去 公园 跑步 。 天气 很 好 ， 公园 里 有 很 多 人 。"
+    },
+    {
+      "type": "paragraph",
+      "tokens": "跑 到 一 棵 大 树 旁边 的 时候 ， 他 听到 了 很 小 的 声音 ： “ 喵 ， 喵 。 ”"
+    },
+    {
+      "type": "paragraph",
+      "tokens": "小明 看 了 看 ， 树 下 有 一 只 白色 的 小猫 。 它 好像 饿 了 ， 也 很 累 。"
+    },
+    {
+      "type": "paragraph",
+      "tokens": "小明 问 ： “ 你 的 家 在 哪儿 ？ ” 小猫 没有 回答 ， 只是 看 着 他 。"
+    },
+    {
+      "type": "paragraph",
+      "tokens": "小明 想 了 想 ， 把 小猫 放 在 自己 的 包 里 ， 带 它 回家 了 。"
+    }
+  ],
+  "dictionary": {
+    "找到": {"py": "zhǎodào", "pos": "v", "en": ["to find"]},
+    "小猫": {"py": "xiǎomāo", "pos": "n", "en": ["kitten"]},
+    "星期六": {"py": "xīngqīliù", "pos": "time", "en": ["Saturday"]},
+    "早上": {"py": "zǎoshang", "pos": "time", "en": ["(early) morning"]},
+    "小明": {"py": "Xiǎo Míng", "pos": "name", "en": ["Xiao Ming (a boy's name)"]},
+    "一": {"py": "yī", "pos": "num", "en": ["one", "a"]},
+    "个": {"py": "gè", "pos": "mw", "en": ["(general measure word)"]},
+    "人": {"py": "rén", "pos": "n", "en": ["person", "people"]},
+    "去": {"py": "qù", "pos": "v", "en": ["to go"]},
+    "公园": {"py": "gōngyuán", "pos": "n", "en": ["park"]},
+    "跑步": {"py": "pǎobù", "pos": "v", "en": ["to run", "to jog"]},
+    "天气": {"py": "tiānqì", "pos": "n", "en": ["weather"]},
+    "很": {"py": "hěn", "pos": "adv", "en": ["very"]},
+    "好": {"py": "hǎo", "pos": "adj", "en": ["good", "nice"]},
+    "里": {"py": "lǐ", "pos": "loc", "en": ["in", "inside"]},
+    "有": {"py": "yǒu", "pos": "v", "weight": 0.55, "en": ["to have", "there is / there are"]},
+    "多": {"py": "duō", "pos": "adj", "en": ["many", "much"]},
+    "跑": {"py": "pǎo", "pos": "v", "en": ["to run"]},
+    "到": {"py": "dào", "pos": "comp", "en": ["to (a place)", "(reaching a goal)"]},
+    "棵": {"py": "kē", "pos": "mw", "en": ["(measure word for trees)"]},
+    "大": {"py": "dà", "pos": "adj", "en": ["big"]},
+    "树": {"py": "shù", "pos": "n", "en": ["tree"]},
+    "旁边": {"py": "pángbiān", "pos": "loc", "en": ["beside", "next to"]},
+    "的": {"py": "de", "pos": "part", "en": ["(possessive / attributive particle)"]},
+    "时候": {"py": "shíhou", "pos": "n", "en": ["time", "(…的时候) when …"]},
+    "他": {"py": "tā", "pos": "pron", "en": ["he", "him"]},
+    "听到": {"py": "tīngdào", "pos": "v", "en": ["to hear"]},
+    "了": {"py": "le", "pos": "part", "en": ["(completed action / change of state)"]},
+    "小": {"py": "xiǎo", "pos": "adj", "en": ["small", "little", "young"]},
+    "声音": {"py": "shēngyīn", "pos": "n", "en": ["sound", "voice"]},
+    "喵": {"py": "miāo", "pos": "n", "en": ["meow"]},
+    "看": {"py": "kàn", "pos": "v", "en": ["to look", "to see"]},
+    "下": {"py": "xià", "pos": "loc", "en": ["under", "below"]},
+    "只": {"py": "zhī", "pos": "mw", "en": ["(measure word for animals)"]},
+    "白色": {"py": "báisè", "pos": "adj", "en": ["white"]},
+    "它": {"py": "tā", "pos": "pron", "en": ["it"]},
+    "好像": {"py": "hǎoxiàng", "pos": "adv", "en": ["seem", "as if"]},
+    "饿": {"py": "è", "pos": "adj", "en": ["hungry"]},
+    "也": {"py": "yě", "pos": "adv", "en": ["also", "too"]},
+    "累": {"py": "lèi", "pos": "adj", "en": ["tired"]},
+    "问": {"py": "wèn", "pos": "v", "en": ["to ask"]},
+    "你": {"py": "nǐ", "pos": "pron", "en": ["you"]},
+    "家": {"py": "jiā", "pos": "n", "en": ["home", "family"]},
+    "在": {"py": "zài", "pos": "prep", "en": ["at", "in", "to be at"]},
+    "哪儿": {"py": "nǎr", "pos": "pron", "en": ["where"]},
+    "没有": {"py": "méiyǒu", "pos": "adv", "en": ["did not", "have not"]},
+    "回答": {"py": "huídá", "pos": "v", "en": ["to answer"]},
+    "只是": {"py": "zhǐshì", "pos": "adv", "en": ["only", "just"]},
+    "着": {"py": "zhe", "pos": "part", "en": ["(ongoing action or state)"]},
+    "想": {"py": "xiǎng", "pos": "v", "en": ["to think", "to want"]},
+    "把": {"py": "bǎ", "pos": "prep", "en": ["(marks the object before the verb)"]},
+    "放": {"py": "fàng", "pos": "v", "en": ["to put", "to place"]},
+    "自己": {"py": "zìjǐ", "pos": "pron", "en": ["oneself", "his own"]},
+    "包": {"py": "bāo", "pos": "n", "en": ["bag"]},
+    "带": {"py": "dài", "pos": "v", "en": ["to take (along)", "to bring"]},
+    "回家": {"py": "huíjiā", "pos": "v", "en": ["to go home"]}
+  }
+}

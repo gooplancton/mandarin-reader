@@ -17,7 +17,12 @@ in Chrome/Edge. It works offline.
   [docs/FORMAT.md](docs/FORMAT.md); start from [`docs/template.json`](docs/template.json).
 - Texts can include pictures (e.g. social media posts); captions are part of the
   reading game. Try [`docs/examples/social-post-images.json`](docs/examples/social-post-images.json).
-- Per-text menu: reset progress, remove an uploaded text.
+- **Books**: chapters that share a `meta.book` appear as one card with overall
+  progress and a *Continue* button that opens the first unfinished chapter;
+  expand it to see each chapter. Upload a book by selecting all its chapter
+  files at once (try [`docs/examples/`](docs/examples)). At the end of a
+  chapter, *Next chapter →* takes you on.
+- Per-text menu: reset progress, remove an uploaded text (or a whole book).
 - **Download backup / Restore backup**: a single JSON file with all your texts,
   progress and cards.
 
@@ -75,5 +80,6 @@ js/flashcards.js        cards, contexts, daily limits, Anki export
 js/srs.js               spaced-repetition scheduler
 js/db.js                IndexedDB storage, backup/restore, migration from the first prototype
 texts/*.json            example texts (bundled into texts/library.js)
+docs/examples/          example uploads: a two-chapter book, a post with images, the skill demo
 tools/build.mjs         build step
 ```
