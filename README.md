@@ -54,6 +54,20 @@ in Chrome/Edge. It works offline.
 
 All data stays on the device (IndexedDB). Nothing is sent to a server.
 
+## Included texts
+
+| Text | Author / source | License | Level |
+|---|---|---|---|
+| 巷子里的旧书店 | original text for this app | CC0 1.0 | HSK 6 |
+| 终不似，少年游 | ImCBC, [imcbc.cn](https://imcbc.cn/202609/rememeber-my-classmates/) | CC BY-NC 4.0 | HSK 5 |
+| 让我们粗鄙一点 | Kivinsae Fang, [kivinsae.com](https://www.kivinsae.com/2023/08/23/2023-08-24-talking_with_people/) | CC BY 4.0 | HSK 6 |
+| 《风暴英雄》对我的意义 | Reorx, [reorx.com](https://reorx.com/essays/2023/01/what-hots-means-to-me/) | CC BY-SA 4.0 | HSK 5 |
+
+The third-party texts are unchanged apart from being segmented into words and
+glossed. Each converted file keeps its original license, and the reader shows
+the credit line under every text. More openly licensed candidates, already
+collected, are in [`content/incoming/`](content/incoming/README.md).
+
 ## Development
 
 No dependencies and no framework: plain ES modules served as static files.

@@ -43,12 +43,15 @@ copyrighted text to `texts/`, and never let `tools/build.mjs` bundle it.
    user asks (or the target learner needs it), then set `"language": "zh-Hans"`
    and record it, e.g. `"x-converted": "zh-Hant → zh-Hans"`. Unconverted
    Traditional text uses `"language": "zh-Hant"`.
-5. Normalise punctuation width only where the source is inconsistent (Chinese
+5. Spaces between Chinese and Latin text or digits (`会话中 99% 的`) can't be
+   represented: the reader shows tokens without spaces, and `--source` ignores
+   whitespace. Just drop them; spaces *inside* a Latin phrase use object form.
+6. Normalise punctuation width only where the source is inconsistent (Chinese
    text uses full-width `，。！？：；“”`; keep `……` and `——` as in the source).
-6. Footnote markers / reference numbers (`…Drafting 1`, `[2]`) with no
+7. Footnote markers / reference numbers (`…Drafting 1`, `[2]`) with no
    footnote text: keep them verbatim as `{ "w": "1", "punct": true }` tokens so
    they aren't tappable words; drop them only if you say so in `meta.notes`.
-7. Images: put each where it appears, as a line `![alt](src)` in the `.txt`,
+8. Images: put each where it appears, as a line `![alt](src)` in the `.txt`,
    followed by its caption on the next line (if any). The validator ignores the
    `![…](…)` line and checks the caption as text.
 
@@ -79,6 +82,9 @@ Work paragraph by paragraph; read the whole sentence before cutting it.
 | Locatives (里 上 中 下 前 后 时) | separate from the noun | `店 里`, `扉页 上`, `过程 中`, `出门 前`, `年轻 时` |
 | Lexicalized place/locative nouns | one token | `网上`, `深处`, `上面`, `底下`, `门口` |
 | Fixed noun + 里/中/上 used as one word | one token with soft boundary | `心·里`, `心·中`, `家·里`, `手·上` (but `店 里`, `书架 上`: free locatives stay separate) |
+| 不 + modal/verb | separate unless the pair is its own dictionary word | `不 能`, `不 会`, `不 知道`; but `不同`, `不错`, `不如`, `不过` |
+| V + 于 (literary "at/from/to") | one token with soft boundary | `等同·于`, `来自·于`, `存在·于`; lexicalized `在于`, `关于`, `对于`, `由于` stay whole |
+| V + 到/见 (perceiving / reaching) | lexicalized ones whole, the rest soft | `看到`, `听到`, `想到`, `看见`; `聊·到`, `感觉·到`, `察觉·到` |
 | Potential complements | V 得/不 C = three tokens; the affirmative resultative stays one soft token | `记 不 起来`, `发挥 不 出`, `听 得 懂`; `发挥·出来`, `想·起来` |
 | Compound nouns | one token; soft boundary where a learner sees two words | `书店`, `天花板`, `纸箱`; `收银·机`, `小鱼·干`, `铲屎·官` |
 | Short fixed verb phrases | one token, soft at each morpheme | `静·下·心·来` |

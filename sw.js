@@ -3,7 +3,7 @@
  * VERSION and ASSETS are written by `node tools/build.mjs` — run it after changing any file.
  * A new VERSION makes browsers download the new files and drop the old cache.
  */
-const VERSION = '8f36664fd0fb';
+const VERSION = 'a7d089117316';
 const ASSETS = [
   "./",
   "css/style.css",

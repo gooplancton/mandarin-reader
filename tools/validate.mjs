@@ -76,12 +76,47 @@ const err = (where, msg) => errors.push(where ? `${where}: ${msg}` : msg);
 const warn = (where, msg) => warnings.push(where ? `${where}: ${msg}` : msg);
 
 let doc;
+let rawJson = '';
 try {
-  doc = JSON.parse(readFileSync(opts.file, 'utf8'));
+  rawJson = readFileSync(opts.file, 'utf8');
+  doc = JSON.parse(rawJson);
 } catch (e) {
   console.error(`✗ ${opts.file}: ${e.code === 'ENOENT' ? 'file not found' : 'invalid JSON — ' + e.message}`);
   process.exit(2);
 }
+
+/**
+ * JSON.parse silently keeps the last of two identical keys, so a dictionary entry written twice
+ * loses one of them. Scan the source text for keys repeated within the same object.
+ */
+function duplicateKeys(text) {
+  const dups = [];
+  const stack = []; // one Set of keys per open object, null for arrays
+  let i = 0;
+  while (i < text.length) {
+    const c = text[i];
+    if (c === '"') {
+      let j = i + 1;
+      while (j < text.length && text[j] !== '"') j += text[j] === '\\' ? 2 : 1;
+      const str = text.slice(i, j + 1);
+      i = j + 1;
+      while (i < text.length && /\s/.test(text[i])) i++;
+      const top = stack[stack.length - 1];
+      if (text[i] === ':' && top) {
+        const key = JSON.parse(str);
+        if (top.has(key)) dups.push(key);
+        top.add(key);
+      }
+      continue;
+    }
+    if (c === '{') stack.push(new Set());
+    else if (c === '[') stack.push(null);
+    else if (c === '}' || c === ']') stack.pop();
+    i++;
+  }
+  return dups;
+}
+for (const k of duplicateKeys(rawJson)) err('json', `key "${k}" appears twice in the same object (the first one is silently lost)`);
 
 // ------------------------------------------------------------------ helpers
 const HAN = /\p{Script=Han}/u;
