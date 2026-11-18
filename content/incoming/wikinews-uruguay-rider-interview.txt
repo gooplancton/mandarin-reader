@@ -1,0 +1,42 @@
+title: 创建慈善基金会的乌拉圭女骑手向记者吐露心声
+title_en: Uruguayan Horsewoman Who Founded a Charity Opens Up to a Reporter (interview)
+url: https://zh.wikinews.org/wiki/创建慈善基金会的乌拉圭女骑手向记者吐露心声
+author: Wikinews. Interview by Marinna; Chinese translation by Sheminghui.WU (part of the Chinese-Spanish Wikinews original-interview translation project).
+site: 维基新闻 Chinese Wikinews (zh.wikinews.org)
+published: 2026-01-17
+retrieved: 2026-11-18
+license: CC BY 4.0 (site footer: "除非另有说明，本站的全部文字在知识共享 署名 4.0协议之条款下提供"). Attribute "Wikinews" and link the article.
+license_url: https://creativecommons.org/licenses/by/4.0/
+register: an interview transcript in Q&A form (维基新闻：… / 马尔多纳多：…). The answers are first-person speech about surviving childhood burns, horses, and resilience. The register is spoken but reflective, and somewhat polished because it is translated from Spanish.
+est_level: HSK 5-6
+chars: 1052
+split_points: none needed (about 1,000 characters)
+images:
+  after_paragraph=0 | https://upload.wikimedia.org/wikipedia/commons/1/10/Alfonsina_Maldonado_en_2025.jpg | Portrait of Alfonsina Maldonado, the interviewee, in 2025 | Photo: Marinna, CC BY-SA 4.0, via Wikimedia Commons (https://commons.wikimedia.org/wiki/File:Alfonsina_Maldonado_en_2025.jpg)
+notes: This is a TRANSLATION from Spanish, not original Chinese. The Chinese is natural, but it is not native spontaneous speech. Removed the dateline "【2026年1月17日讯】", the "消息来源" section (sources and translator credit, now recorded in the author field), and the share/footer boxes. The original fifth paragraph had a <br> line break inside it, so its last sentence ("社会可以通过多种方式参与进来…") is a separate paragraph here (paragraph 6). The text was fetched in the zh-hans (Simplified) display variant; the source is already written in Simplified. The image is CC BY-SA 4.0, unlike the CC BY 4.0 text, so its credit line must name the license. Chinese Wikinews has been permanently read-only since 2026-05-04 (all Wikinews editions were closed), but the pages and the license stay. Verbatim otherwise.
+---
+维基新闻采访了乌拉圭知名女骑手和演讲家阿尔丰西娜·马尔多纳多。她于2016年出版了《生活的挑战》一书。自2024年起，她担任国家品牌大使，同时也是以其名字命名的阿尔丰西娜·马尔多纳多的负责人，该基金会致力于帮助乌拉圭的烧伤儿童。
+
+维基新闻：阿尔丰西娜·马尔多纳多基金会是如何创立的？
+
+马尔多纳多： 基金会的创立源于我自身的创伤，那是在多年痊愈之后，随着时间的推移，这转变成了我的使命。我曾是一个烧伤儿童。我住院多年，经历了身体的疼痛、恐惧、孤独以及那种深深的、不知道生活是否会再次"正常"的感觉。马匹和运动拯救了我，让我重拾了身份、力量和生活的意义。在很长一段时间里，我都觉得，如果我幸存下来，那一定是为了比仅仅为自己继续前行更有意义的事情。
+
+这个项目源于我内心一种深切的需要：以另一种身份回到医院——不再是病人，而是陪伴者。基金会旨在陪伴患有严重烧伤的儿童及其家庭，不仅是在医疗方面，更是在情感和人文关怀上。我们希望在他们住院期间、康复阶段以及之后的日子里都能提供支持，而"之后"往往是最沉默也最艰难的阶段。
+
+具体目标是营造一个包容支持的空间，推广相关活动，致力于帮助这些孩子重建自尊和身份认同——我称他们为"小武士"，因为他们以无比的勇气进行着巨大的战斗。我们也努力提高人们对烧伤预防的认识，并让这个常常被忽视的现实得到更多关注。
+
+社会可以通过多种方式参与进来：进行传播、向我们的账户捐款、提供资源，最重要的是，以同理心和责任感来看待这一现实。
+
+维基新闻：回顾过去，您经历的哪一部分最让您自己感到惊讶？
+
+马尔多纳多：让我震撼的是，我认识到那个小女孩身上蕴含着多么巨大的力量，而我过去并不记得自己勇敢，只记得自己只是一个尽力求生的人。回顾往事，我明白了那不是认命，而是适应。我后来做出的许多决定（从事体育运动、与马为伴、不懈追求自由）都源于那段经历，源于那种默默尝试重新感受生命活力、重新成为自己身体主人的渴望。
+
+同样让我惊讶的是，我发现即使在最艰难的时刻，周围也充满了爱。有时记忆里只留下了痛苦，但通过写作，我理解了爱同样是决定性的因素。脆弱与力量之间的这种平衡，或许正是我故事真正的核心。
+
+维基新闻：您特别希望年轻人或面临挑战的人们能记住什么信息？
+
+马尔多纳多：我想告诉他们，痛苦会留下印记，但也会带来转变。在这样的境遇中，乃至在整个生命里，痛苦会成为一位伟大的老师，甚至是一位盟友。这并不是因为它容易承受或理所应当，而是因为它教会我们以一种更充实、更专注、并带着一种我们以前未曾察觉的简单的方式去生活。
+
+同时，要学会热爱生活留给我们自然的"纹身"。那些并非自己选择的印记，却讲述着一个故事。
+
+爱自己不是否认伤口，而是承认它是自我版图的一部分。因为在这个布满印记的身体里，也居住着美丽、尊严和一种任何人都无法夺走的力量。就在那里，当你真正接纳自己时，生活便会再次拥抱我们。
