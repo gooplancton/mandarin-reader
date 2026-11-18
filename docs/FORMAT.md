@@ -44,8 +44,8 @@ An array of blocks, in reading order:
 { "type": "paragraph", "tokens": "…" }
 ```
 
-- `type`: `"paragraph"` or `"heading"`. Unknown types are shown as paragraphs.
-  Planned: `"dialogue"` (with `speaker`), `"image"`, `"break"`.
+- `type`: `"paragraph"`, `"heading"` or `"image"` (see [Image blocks](#image-blocks)).
+  Unknown types are shown as paragraphs. Planned: `"dialogue"` (with `speaker`), `"break"`.
 - `tokens`: the words of the block, in order. Give them as a **shorthand string**
   or as an **array**.
 
@@ -81,6 +81,45 @@ Each item is either a shorthand string as above, or an object:
 
 **Punctuation** tokens can't be "split" and count as boundaries on both sides.
 The reader skips over them automatically.
+
+### Image blocks
+
+Texts can mix pictures with text, as social media posts do:
+
+```jsonc
+{
+  "type": "image",
+  "src": "https://example.org/pic.jpg",   // required, see below
+  "alt": "A street food stall at night",  // required: what the picture shows (any language)
+  "caption": "夜市 里 的 小吃摊",          // optional: same syntax as "tokens" (shorthand string or array)
+  "credit": "Photo: Jane Doe, CC BY 4.0", // optional attribution, plain text, shown small
+  "width": 1200, "height": 800            // optional intrinsic size in pixels
+}
+```
+
+- `src` can be
+  - an `https://` URL,
+  - a `data:image/…` URI (keeps the file self-contained; fine for small pictures and SVG), or
+  - a path relative to the text file, e.g. `images/stall.jpg`. This only works for
+    built-in texts, which live in `texts/` (the path becomes `texts/images/stall.jpg`).
+    An uploaded text has no folder, so use an https URL or a data: URI there.
+- The **caption is part of the reading game**: its words are segmented, tapped and
+  looked up like any other text, and count towards progress. It is its own block,
+  so its sentences don't merge with the paragraph around it. Put its words in the
+  dictionary too.
+- `alt` and `credit` are not part of the game. `alt` is read by screen readers and
+  shown if the picture can't be loaded.
+- Give `width` and `height` when you know them: the reader then reserves the
+  right amount of space before the picture arrives, so the text doesn't jump.
+- Tapping a picture shows it full-screen. Pictures from other sites are kept in
+  the app's offline cache once they've been shown.
+- A missing or unusable `src`, or a missing `alt`, produces a warning; the block is
+  then shown as a placeholder with its `alt` text (or skipped if there's nothing to show).
+- Image blocks don't change the format version: an older reader treats one as an
+  unknown block without `tokens` (a warning and an empty paragraph), and the rest
+  of the text still reads correctly.
+
+Example: [`docs/examples/social-post-images.json`](examples/social-post-images.json).
 
 ## `dictionary`
 

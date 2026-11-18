@@ -21,6 +21,7 @@ const PRAISE = [
 const STREAK_MILESTONES = [10, 25, 50, 100, 200, 400];
 const SENTENCE_END = /^[。！？!?；;…]+$/;
 const CLOSING = /^[”’」』）)\]】》〉]+$/;
+const SCROLL_ANCHORING = typeof CSS !== 'undefined' && CSS.supports && CSS.supports('overflow-anchor', 'auto');
 
 function freshStats() {
   return {
@@ -70,13 +71,23 @@ class Reader {
 
   _build() {
     const frag = document.createDocumentFragment();
+    const lang = this.doc.meta.language || 'zh';
     let pos = 0;
     let wordIndex = 0;
+    this.blockEls = [];
     this.doc.blocks.forEach((block, bi) => {
-      const tag = block.type === 'heading' ? 'h2' : 'p';
-      const bEl = document.createElement(tag);
-      bEl.className = 'block block-' + block.type;
-      bEl.lang = this.doc.meta.language || 'zh';
+      let bEl;
+      let tokParent;
+      if (block.type === 'image') {
+        bEl = this._buildFigure(block);
+        tokParent = bEl.querySelector('figcaption');
+      } else {
+        bEl = document.createElement(block.type === 'heading' ? 'h2' : 'p');
+        bEl.className = 'block block-' + block.type;
+        bEl.lang = lang;
+        tokParent = bEl;
+      }
+      this.blockEls.push(bEl);
       block.tokens.forEach((t) => {
         const tok = {
           text: t.text,
@@ -108,13 +119,76 @@ class Reader {
         this.boundaries.add(tok.end);
         tok.soft.forEach((b) => this.boundaries.add(b));
         this.tokens.push(tok);
-        bEl.appendChild(tok.el);
+        tokParent.appendChild(tok.el);
       });
       frag.appendChild(bEl);
     });
     this.wordCount = wordIndex;
     this.root.innerHTML = '';
     this.root.appendChild(frag);
+  }
+
+  /**
+   * <figure> for an image block: the picture (or a placeholder with the alt text if it's
+   * missing or fails to load), the caption (its words join the reading game) and the credit.
+   */
+  _buildFigure(block) {
+    const fig = document.createElement('figure');
+    fig.className = 'block block-image';
+    const frame = document.createElement('div');
+    frame.className = 'img-frame';
+    fig.appendChild(frame);
+
+    if (block.src) {
+      const img = document.createElement('img');
+      img.alt = block.alt;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      if (block.width && block.height) {
+        // Reserve the space before the image arrives, so the text below doesn't jump.
+        img.width = block.width;
+        img.height = block.height;
+        img.style.aspectRatio = `${block.width} / ${block.height}`;
+        img.style.width = `min(100%, ${block.width}px)`;
+      } else {
+        frame.classList.add('loading');
+      }
+      img.addEventListener('load', () => this._imageLoaded(frame), { once: true });
+      img.addEventListener('error', () => frame.replaceChildren(imagePlaceholder(block.alt)), { once: true });
+      img.src = block.src;
+      frame.appendChild(img);
+    } else {
+      frame.appendChild(imagePlaceholder(block.alt));
+    }
+
+    if (block.tokens.length) {
+      const cap = document.createElement('figcaption');
+      cap.lang = this.doc.meta.language || 'zh';
+      fig.appendChild(cap);
+    }
+    if (block.credit) {
+      const credit = document.createElement('small');
+      credit.className = 'img-credit';
+      credit.textContent = block.credit;
+      fig.appendChild(credit);
+    }
+    return fig;
+  }
+
+  /**
+   * An image without a known size just loaded and changed height. Browsers with scroll
+   * anchoring keep the visible text in place by themselves; elsewhere (Safari), if the image
+   * is above the screen, scroll by the change so the reading position doesn't jump.
+   */
+  _imageLoaded(frame) {
+    if (!frame.classList.contains('loading')) return;
+    const before = frame.getBoundingClientRect();
+    frame.classList.remove('loading');
+    if (SCROLL_ANCHORING) return;
+    const after = frame.getBoundingClientRect();
+    if (after.bottom <= 0 && after.height !== before.height) {
+      global.scrollBy({ top: after.height - before.height, behavior: 'auto' });
+    }
   }
 
   // ---------------------------------------------------------------- state
@@ -172,6 +246,11 @@ class Reader {
   // ---------------------------------------------------------------- input
 
   _onClick(e) {
+    const img = e.target.closest('.img-frame img');
+    if (img && this.root.contains(img)) {
+      if (this.hooks.onImage) this.hooks.onImage(this, img);
+      return;
+    }
     const chEl = e.target.closest('.ch');
     if (!chEl || !this.root.contains(chEl)) return;
     this.tap(Number(chEl.dataset.i), chEl);
@@ -303,16 +382,39 @@ class Reader {
     else this._renderFromScratch(0);
   }
 
-  /** Keep the reading position at a comfortable height; only ever scrolls down unless forced. */
+  /**
+   * Keep the reading position at a comfortable height; only ever scrolls down unless forced.
+   * When the cursor has just moved past (or into the caption of) an image, the image is
+   * brought into view as well, as long as the reading position stays on screen.
+   */
   scrollToCursor(force = false) {
+    if (force && this.cursor === 0) {
+      global.scrollTo({ top: 0, behavior: 'auto' });
+      return;
+    }
     const target = this.finished ? this.root.lastElementChild : this.chars[this.cursor].el;
     if (!target) return;
     const rect = target.getBoundingClientRect();
-    const desired = global.innerHeight * 0.38;
-    const delta = rect.top - desired;
+    const vh = global.innerHeight;
+    let delta = rect.top - vh * 0.38;
+    const fig = this.finished ? null : this._figureBeforeCursor();
+    if (fig) {
+      const figDelta = fig.getBoundingClientRect().top - vh * 0.16;
+      delta = Math.max(Math.min(delta, figDelta), rect.bottom - vh * 0.85);
+    }
     if (force || delta > 8) {
       global.scrollBy({ top: delta, behavior: force ? 'auto' : 'smooth' });
     }
+  }
+
+  /** The first image between the last read character and the cursor (or the cursor's own figure). */
+  _figureBeforeCursor() {
+    const cur = this.chars[this.cursor].tok.block;
+    const prev = this.cursor > 0 ? this.chars[this.cursor - 1].tok.block : -1;
+    for (let b = prev + 1; b <= cur; b++) {
+      if (this.doc.blocks[b].type === 'image') return this.blockEls[b];
+    }
+    return null;
   }
 
   /** Split each block into sentences; every token gets tok.sentence = [firstTokenIndex, lastTokenIndex]. */
@@ -360,6 +462,15 @@ class Reader {
       return true;
     });
   }
+}
+
+function imagePlaceholder(alt) {
+  const el = document.createElement('div');
+  el.className = 'img-missing';
+  el.setAttribute('role', 'img');
+  el.setAttribute('aria-label', alt || 'Image not available');
+  el.textContent = alt || 'Image not available';
+  return el;
 }
 
 function praiseFor(n) {

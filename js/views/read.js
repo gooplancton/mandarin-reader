@@ -56,6 +56,7 @@ function init() {
   document.addEventListener('keydown', (e) => {
     if (el().hidden) return;
     if (e.key === 'Escape') {
+      if (closeLightbox()) return;
       closeSheet();
       closeFinish();
     }
@@ -87,6 +88,7 @@ export async function show(id) {
     requestAnimationFrame(() => reader.scrollToCursor(true));
     return;
   }
+  closeLightbox();
   closeSheet();
   closeFinish();
   if (reader) reader.destroy();
@@ -127,6 +129,7 @@ export async function show(id) {
       onWord: showWord,
       onFinish: showFinish,
       onFeedback: feedback,
+      onImage: (r, img) => openLightbox(img),
       onSave: (snap) => library.saveProgress(id, snap),
     },
     saved
@@ -136,6 +139,7 @@ export async function show(id) {
 }
 
 export function hide() {
+  closeLightbox();
   closeSheet();
   closeFinish();
 }
@@ -258,6 +262,35 @@ function closeSheet() {
   els.sheet.setAttribute('aria-hidden', 'true');
   if (selectedTok) selectedTok.el.classList.remove('selected');
   selectedTok = null;
+}
+
+// ------------------------------------------------------------ image lightbox
+
+let lightbox = null;
+
+/** Show a picture from the text full-screen; any tap or Escape closes it. */
+function openLightbox(img) {
+  closeSheet();
+  if (!lightbox) {
+    lightbox = h('div.lightbox', { role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Image', onclick: closeLightbox });
+    document.body.appendChild(lightbox);
+  }
+  const fig = img.closest('figure');
+  const credit = fig && fig.querySelector('.img-credit');
+  lightbox.replaceChildren(
+    h('img', { src: img.currentSrc || img.src, alt: img.alt }),
+    credit ? h('div.lightbox-credit', null, credit.textContent) : null,
+    h('button.lightbox-close', { 'aria-label': 'Close' }, '×')
+  );
+  lightbox.classList.add('open');
+}
+
+/** Returns true if the lightbox was open. */
+function closeLightbox() {
+  if (!lightbox || !lightbox.classList.contains('open')) return false;
+  lightbox.classList.remove('open');
+  lightbox.replaceChildren();
+  return true;
 }
 
 // ------------------------------------------------------------ finish

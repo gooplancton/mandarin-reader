@@ -15,6 +15,8 @@ in Chrome/Edge. It works offline.
   (Not started, 37% read, Finished).
 - **Upload text**, or drop `.json` files anywhere on the page. The format is in
   [docs/FORMAT.md](docs/FORMAT.md); start from [`docs/template.json`](docs/template.json).
+- Texts can include pictures (e.g. social media posts); captions are part of the
+  reading game. Try [`docs/examples/social-post-images.json`](docs/examples/social-post-images.json).
 - Per-text menu: reset progress, remove an uploaded text.
 - **Download backup / Restore backup**: a single JSON file with all your texts,
   progress and cards.

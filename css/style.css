@@ -15,6 +15,9 @@
   --bad-soft: rgba(194, 69, 61, 0.18);
   --hint: #d99a1e;
   --shadow: 0 10px 30px rgba(40, 30, 10, 0.15);
+  --img-bg: #ece5d6;
+  --img-border: rgba(60, 50, 30, 0.12);
+  --scrim: rgba(20, 18, 14, 0.92);
   color-scheme: light;
 }
 
@@ -34,6 +37,9 @@
     --bad: #ef6b62;
     --bad-soft: rgba(239, 107, 98, 0.22);
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --img-bg: #2c2a26;
+    --img-border: rgba(255, 245, 225, 0.08);
+    --scrim: rgba(0, 0, 0, 0.94);
     color-scheme: dark;
   }
 }
@@ -161,6 +167,76 @@ button.link { border: none; background: none; color: var(--muted); font: inherit
 .block { margin: 0 0 0.9em; }
 .block-paragraph { text-indent: 2em; }
 .block-heading { font-size: 1.15em; font-weight: 600; margin: 0.4em 0 0.6em; text-align: center; }
+
+/* image blocks: picture, then a caption that is part of the reading game, then a small credit */
+.block-image { margin: 1.1em 0 1em; }
+.img-frame { display: flex; justify-content: center; }
+.img-frame img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: 10px;
+  background: var(--img-bg);
+  box-shadow: 0 0 0 1px var(--img-border);
+  cursor: zoom-in;
+}
+/* size unknown until it loads: hold a fixed amount of room (see Reader._imageLoaded) */
+.img-frame.loading { height: 12em; overflow: hidden; border-radius: 10px; background: var(--img-bg); }
+.img-missing {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 7em;
+  padding: 16px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  background: var(--img-bg);
+  color: var(--muted);
+  font: italic 14px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  text-align: center;
+}
+.img-missing::before { content: "🖼"; display: block; font-style: normal; font-size: 22px; opacity: 0.6; }
+.block-image figcaption { margin-top: 0.3em; font-size: 0.8em; line-height: 2; text-align: center; }
+.img-credit {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font: 11px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  text-align: center;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: max(16px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom));
+  background: var(--scrim);
+  cursor: zoom-out;
+  animation: fadein 0.15s ease;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: calc(100% - 32px); object-fit: contain; border-radius: 6px; }
+.lightbox-credit { color: rgba(255, 255, 255, 0.7); font-size: 12px; text-align: center; }
+.lightbox-close {
+  position: absolute;
+  top: max(8px, env(safe-area-inset-top));
+  right: 12px;
+  border: none;
+  background: none;
+  color: #fff;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+}
 
 .tok { position: relative; border-radius: 0.18em; transition: background-color 0.25s ease; }
 /* chars stay plain inline text so the browser keeps CJK line-breaking rules (no line starting with ，。) */
@@ -605,5 +681,5 @@ body.dragging #drop-hint { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   .tok.pop .ch.read, .tok.wrong, .fx { animation-duration: 0.01ms; }
   .ch.next::before { animation: none; }
-  .fc-back { animation: none; }
+  .fc-back, .lightbox { animation: none; }
 }

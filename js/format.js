@@ -44,12 +44,12 @@ function parseShorthandToken(piece) {
 }
 
 /** Accepts a string shorthand, an array of strings/objects, and returns raw token objects. */
-function expandTokens(tokens, where, warnings) {
+function expandTokens(tokens, where, warnings, field = 'tokens') {
   if (typeof tokens === 'string') {
     return tokens.trim().split(/\s+/).filter(Boolean).map(parseShorthandToken);
   }
   if (!Array.isArray(tokens)) {
-    warnings.push(`${where}: "tokens" must be a string or an array`);
+    warnings.push(`${where}: "${field}" must be a string or an array`);
     return [];
   }
   const out = [];
@@ -66,12 +66,41 @@ function expandTokens(tokens, where, warnings) {
 }
 
 /**
+ * Resolve an image block's "src". Returns { src, problem }: src is null when the image
+ * can't be shown; problem is a warning (the image may still be shown, e.g. plain http).
+ * `base` is the folder relative paths resolve against (built-in texts: "texts/"),
+ * or null when the text has no location (uploads).
+ */
+function resolveImageSrc(src, base) {
+  if (typeof src !== 'string' || !src.trim()) return { src: null, problem: '"src" is missing' };
+  src = src.trim();
+  if (/^data:image\//i.test(src) || /^https:\/\//i.test(src)) return { src, problem: null };
+  if (/^http:\/\//i.test(src)) return { src, problem: `"src" uses http; use https so the image loads on secure pages` };
+  if (/^[a-z][a-z0-9+.-]*:/i.test(src) || src.startsWith('//')) {
+    return { src: null, problem: `"src" must be an https URL, a data:image URI or a relative path (got "${src.slice(0, 40)}")` };
+  }
+  if (src.startsWith('/')) return { src: null, problem: `"src" can't start with "/"; use a path relative to the text file` };
+  if (base == null) {
+    return {
+      src: null,
+      problem: `relative image path "${src}" can't be resolved for an uploaded text; use an https URL or a data: URI`,
+    };
+  }
+  return { src: base + src.replace(/^(\.\/)+/, ''), problem: null };
+}
+
+const positiveInt = (n) => (Number.isFinite(n) && n > 0 ? Math.round(n) : null);
+
+/**
  * Normalize a raw document.
  * Returns { meta, dictionary, blocks, warnings } where each block is
  * { type, tokens: [{ text, chars, key, soft, punct, raw }], raw }.
+ * Image blocks also have { src, alt, credit, width, height }; their tokens are the caption's.
+ * Options: { base } — folder that relative image paths resolve against (e.g. "texts/");
+ * leave it out for texts that have no location (uploads).
  * Throws on fatal problems (wrong format, unsupported major version).
  */
-function normalize(doc) {
+function normalize(doc, options = {}) {
   if (!doc || typeof doc !== 'object') throw new Error('Document is not an object');
   if (doc.format !== FORMAT_ID) {
     throw new Error(`Unknown format "${doc.format}" (expected "${FORMAT_ID}")`);
@@ -89,10 +118,27 @@ function normalize(doc) {
   if (!Array.isArray(doc.body)) throw new Error('"body" must be an array of blocks');
 
   const missing = new Set();
-  const blocks = doc.body.map((block, bi) => {
+  const blocks = [];
+  doc.body.forEach((block, bi) => {
     const where = `body[${bi}]`;
     const type = block && typeof block.type === 'string' ? block.type : 'paragraph';
-    const rawTokens = expandTokens(block ? block.tokens : null, where, warnings);
+    const isImage = type === 'image';
+    let image = null;
+    if (isImage) {
+      const { src, problem } = resolveImageSrc(block.src, options.base == null ? null : options.base);
+      const alt = typeof block.alt === 'string' ? block.alt.trim() : '';
+      if (problem) warnings.push(`${where} (image): ${problem}`);
+      if (!alt) warnings.push(`${where} (image): "alt" (a description of the image) is missing`);
+      image = {
+        src,
+        alt,
+        credit: typeof block.credit === 'string' && block.credit.trim() ? block.credit.trim() : null,
+        width: positiveInt(block.width),
+        height: positiveInt(block.height),
+      };
+    }
+    const tokenSource = isImage ? (block.caption == null ? [] : block.caption) : block ? block.tokens : null;
+    const rawTokens = expandTokens(tokenSource, where, warnings, isImage ? 'caption' : 'tokens');
     const tokens = rawTokens.map((raw) => {
       const chars = [...raw.w];
       const punct = typeof raw.punct === 'boolean' ? raw.punct : isPunctuation(raw.w);
@@ -103,7 +149,9 @@ function normalize(doc) {
       if (key && !dictionary[key]) missing.add(key);
       return { text: raw.w, chars, key, soft, punct, raw };
     });
-    return { type, tokens, raw: block };
+    // An image with nothing to show (no usable src, no alt, no caption) is skipped.
+    if (isImage && !image.src && !image.alt && !tokens.length) return;
+    blocks.push(Object.assign({ type }, image, { tokens, raw: block }));
   });
 
   if (missing.size) {
@@ -148,4 +196,4 @@ function hashString(s) {
   return (h >>> 0).toString(36);
 }
 
-export { FORMAT_ID, SUPPORTED_MAJOR, POS_WEIGHT, normalize, lookup, weightOf, isPunctuation, parseShorthandToken };
+export { FORMAT_ID, SUPPORTED_MAJOR, POS_WEIGHT, normalize, lookup, weightOf, isPunctuation, parseShorthandToken, resolveImageSrc };

@@ -30,6 +30,10 @@ const ASSETS = [
 ];
 
 const CACHE = 'mandarin-reader-' + VERSION;
+// Pictures from other sites (image blocks in texts). Kept across app versions, so a text
+// read once keeps its pictures offline; the oldest entries are dropped past IMAGE_LIMIT.
+const IMAGE_CACHE = 'mr-images-v1';
+const IMAGE_LIMIT = 300;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -53,7 +57,10 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;
+  if (url.origin !== self.location.origin) {
+    if (req.destination === 'image') event.respondWith(crossOriginImage(event));
+    return;
+  }
 
   // App navigation: always answer with the cached shell (routing happens in the #hash).
   if (req.mode === 'navigate') {
@@ -75,3 +82,22 @@ self.addEventListener('fetch', (event) => {
     )
   );
 });
+
+/** Cache first; on a miss, fetch and keep the picture. Opaque (no-CORS) responses are fine for <img>. */
+async function crossOriginImage(event) {
+  const req = event.request;
+  const cache = await caches.open(IMAGE_CACHE);
+  const hit = await cache.match(req);
+  if (hit) return hit;
+  const res = await fetch(req);
+  if (res.ok || res.type === 'opaque') {
+    const copy = res.clone();
+    event.waitUntil(
+      cache
+        .put(req, copy)
+        .then(() => cache.keys())
+        .then((keys) => Promise.all(keys.slice(0, Math.max(0, keys.length - IMAGE_LIMIT)).map((k) => cache.delete(k))))
+    );
+  }
+  return res;
+}
