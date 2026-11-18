@@ -301,6 +301,22 @@ if (opts.skeleton) {
 if (/(^|[\\/])texts[\\/][^\\/]+\.json$/.test(opts.file) && isNonEmptyStr(meta.id) && basename(opts.file, '.json') !== meta.id)
   err('meta.id', `built-in text: file name must be texts/${meta.id}.json`);
 
+// Built-ins are republished on the public site: the license must allow it, and CC needs attribution.
+if (/(^|[\\/])texts[\\/][^\\/]+\.json$/.test(opts.file)) {
+  const lic = String(meta.license || '');
+  if (!lic) err('meta.license', 'built-in text without a license — only owned, public-domain or openly licensed texts may go in texts/');
+  else if (/all rights reserved|proprietary/i.test(lic)) err('meta.license', `built-in text is "${lic}" — keep it as a private upload, not in texts/`);
+  else if (/-ND\b|NoDerivatives/i.test(lic)) err('meta.license', `${lic} forbids adaptations (segmenting/glossing) — private upload only`);
+  const cc = /^CC-BY/i.test(lic);
+  const src = isObj(meta.source) ? meta.source : {};
+  if (cc) {
+    if (!src.author && !meta.author) err('meta.source.author', `${lic} requires crediting the author`);
+    if (!src.url) warn('meta.source.url', `${lic}: link the original (source.url)`);
+    if (!meta.licenseUrl) warn('meta.licenseUrl', `${lic}: add the license URL`);
+    if (!meta.modifications) warn('meta.modifications', `${lic}: say what was changed (e.g. "Segmented into words and glossed…")`);
+  }
+}
+
 // ------------------------------------------------------------------ dictionary
 /** Rough syllable count of a pinyin string: one vowel group per syllable (y/w are consonants). */
 const VOWELS = 'aeiouüāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ';

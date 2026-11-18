@@ -17,7 +17,8 @@ social-media example made with this skill (emoji, number, @mention, hashtag, ima
 
 | Content | Where | Notes |
 |---|---|---|
-| User wrote it / owns it, public domain, or an open license that allows redistribution (CC0, CC-BY, CC-BY-SA, …) | built-in: `texts/<id>.json` | record `meta.source` + `meta.license` (+ `licenseUrl`); CC-BY/SA need the author credited — keep `author`/`source.author` |
+| User wrote it / owns it, public domain, or an open license that allows redistribution and adaptation (CC0, CC-BY, CC-BY-SA, and CC-BY-NC / CC-BY-NC-SA while the app stays free and non-commercial) | built-in: `texts/<id>.json` | record `meta.source` + `meta.license` + `licenseUrl` + `modifications`; the app shows these as the credit line under the text. Share-alike (`-SA`) licenses: the JSON keeps the **same** license. Non-commercial (`-NC`): mention it to the user when you add the text. |
+| `-ND` (no derivatives) licenses | **private upload only** | segmenting and glossing is an adaptation, which ND forbids |
 | Anything else (news site, someone's Weibo/WeChat post, a modern novel…) | **private upload only**: write it outside `texts/`, e.g. `~/mandarin-reader-uploads/<id>.json` or a path the user names | tell the user it's for their own use via *Upload text* and must not be committed; `meta.license: "All rights reserved"` (or what you know) |
 
 If you are unsure about the license, treat it as private. Never commit
@@ -25,15 +26,18 @@ copyrighted text to `texts/`, and never let `tools/build.mjs` bundle it.
 
 ## 1. Prepare the input
 
-1. Save the cleaned raw text as `<id>.txt` next to the JSON (scratch dir for
-   private texts). This file is what `--source` checks against, so it is the
+1. Save the cleaned raw text as `<id>.txt` in a scratch/working directory —
+   **never in `texts/`** (the build bundles that folder). This file is what `--source` checks against, so it is the
    text **exactly as it will be shown**.
 2. Clean up, but **keep the original wording**: remove page furniture (nav,
    "阅读原文", like/share counts, ads, timestamps lines), URLs, and broken
    characters. Don't fix the author's grammar, don't "simplify" vocabulary,
    don't drop sentences. If you abridge, say so in `meta.notes` (free field).
-3. Keep paragraphing: one source paragraph = one `paragraph` block. Titles and
-   section titles = `heading` blocks. Very long paragraphs (> ~400 chars) may be
+3. Keep paragraphing: one source paragraph = one `paragraph` block. Section
+   titles inside the text = `heading` blocks. The text's own title goes in
+   `meta.title` (the reader shows it in its header); add it as a first `heading`
+   block only if you also put it as the first line of the `.txt`, so `--source`
+   still matches. Either is fine — be consistent within a book. Very long paragraphs (> ~400 chars) may be
    split at a sentence end.
 4. Script: keep the source script. Convert Traditional→Simplified only if the
    user asks (or the target learner needs it), then set `"language": "zh-Hans"`
@@ -41,7 +45,10 @@ copyrighted text to `texts/`, and never let `tools/build.mjs` bundle it.
    Traditional text uses `"language": "zh-Hant"`.
 5. Normalise punctuation width only where the source is inconsistent (Chinese
    text uses full-width `，。！？：；“”`; keep `……` and `——` as in the source).
-6. Images: put each where it appears, as a line `![alt](src)` in the `.txt`,
+6. Footnote markers / reference numbers (`…Drafting 1`, `[2]`) with no
+   footnote text: keep them verbatim as `{ "w": "1", "punct": true }` tokens so
+   they aren't tappable words; drop them only if you say so in `meta.notes`.
+7. Images: put each where it appears, as a line `![alt](src)` in the `.txt`,
    followed by its caption on the next line (if any). The validator ignores the
    `![…](…)` line and checks the caption as text.
 
@@ -71,6 +78,8 @@ Work paragraph by paragraph; read the whole sentence before cutting it.
 | … that are two clear halves | one token with soft middle | `各种·各样` |
 | Locatives (里 上 中 下 前 后 时) | separate from the noun | `店 里`, `扉页 上`, `过程 中`, `出门 前`, `年轻 时` |
 | Lexicalized place/locative nouns | one token | `网上`, `深处`, `上面`, `底下`, `门口` |
+| Fixed noun + 里/中/上 used as one word | one token with soft boundary | `心·里`, `心·中`, `家·里`, `手·上` (but `店 里`, `书架 上`: free locatives stay separate) |
+| Potential complements | V 得/不 C = three tokens; the affirmative resultative stays one soft token | `记 不 起来`, `发挥 不 出`, `听 得 懂`; `发挥·出来`, `想·起来` |
 | Compound nouns | one token; soft boundary where a learner sees two words | `书店`, `天花板`, `纸箱`; `收银·机`, `小鱼·干`, `铲屎·官` |
 | Short fixed verb phrases | one token, soft at each morpheme | `静·下·心·来` |
 | Adjective + noun (free) | separate | `旧 书店`, `小 巷子`, `木 招牌` |
@@ -98,6 +107,9 @@ same reading are extra glosses instead (`一`: "one", "(一…就: as soon as)")
 - Every punctuation mark is its own token: `，` `。` `“` `”` `：` `？` …
   Consecutive marks are separate tokens: `。 ”`, `： “`.
 - Multi-character marks stay one token: `……`, `——`.
+- Corner quotes `「」『』` and book-title marks `《》` are punctuation tokens
+  like `“”`; the title inside `《…》` is segmented normally (a work's name may be
+  one `name` token with soft boundaries: `《 风暴·英雄 》`).
 - Never glue punctuation to a word (`书。` is an error).
 
 ### Social media & mixed script
@@ -166,7 +178,8 @@ not per occurrence — so its gloss must cover every use **in this text**.
   "source": { "url": "https://…", "name": "Wikisource", "author": "老舍",
               "published": "1937-01-01", "retrieved": "2026-11-18" },
   "license": "Public domain",           // SPDX id when there is one: CC0-1.0, CC-BY-4.0, CC-BY-SA-4.0
-  "licenseUrl": "https://…",            // when useful (CC licenses)
+  "licenseUrl": "https://…",            // always for CC licenses
+  "modifications": "Segmented into words and glossed for Mandarin Reader; text otherwise unchanged.",
   "tags": ["novel", "Beijing", "1930s"],
   "book": { "id": "laoshe-luotuo-xiangzi", "title": "骆驼祥子", "titleTranslation": "Rickshaw Boy", "author": "老舍" },
   "chapter": { "number": 3, "title": "第三章" }
@@ -182,8 +195,9 @@ not per occurrence — so its gloss must cover every use **in this text**.
   usually 3–4 even when they use slang. Pick the level a learner needs to read
   it comfortably with the glossary.
 - **source/license**: fill what you know; `retrieved` = today. Original texts
-  written for the app: `"author": "Original text written for Mandarin Reader"`,
-  `"license": "CC0-1.0"`.
+  written for the app: `"author": "Mandarin Reader (original text)"`,
+  `"license": "CC0-1.0"`. Third-party texts: `modifications` is required by CC
+  licenses (state what you changed; mention any abridgement).
 - **tags**: genre + topic + register, lowercase English (`essay`, `social media`, `news`, `spoken`).
 
 ### Books and chapters
