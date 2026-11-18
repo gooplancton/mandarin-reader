@@ -35,6 +35,36 @@ sentences, which looking words up in one big dictionary can't handle.
 | `language`         | BCP-47 string                 | `zh-Hans` (default) or `zh-Hant`                           |
 | `level`            | `{ "system", "value" }`       | e.g. `{ "system": "HSK", "value": "6" }`                   |
 | `author`, `source`, `license`, `tags` | any         | optional                                                   |
+| `book`             | `{ "id", "title", "titleTranslation"?, "author"? }` | optional: the book this text is a chapter of (see below) |
+| `chapter`          | `{ "number"?, "title"? }`     | optional: position and title of the chapter within its book |
+
+### Books and chapters
+
+A text file is always one chapter. Texts that share the same `meta.book.id` form
+one book, which the library shows as a single card with a list of chapters.
+
+```jsonc
+"meta": {
+  "id": "laoshe-chaguan-1",          // still unique per file: progress is saved per chapter
+  "title": "第一幕",                  // the chapter's own title
+  "book": { "id": "laoshe-chaguan", "title": "茶馆", "titleTranslation": "Teahouse", "author": "老舍" },
+  "chapter": { "number": 1, "title": "第一幕" }
+}
+```
+
+- `book.id` and `book.title` are required; `titleTranslation` and `author` are
+  optional. The book's title, translation and author are taken from the
+  lowest-numbered chapter that has them, so later chapters may give just
+  `{ "id", "title" }`.
+- `chapter.number` is the sort key and may be fractional (`2.5` slots a chapter
+  in between). Chapters without a number come after the numbered ones, sorted
+  by title. `chapter.title` defaults to `meta.title`.
+- A malformed `book` or `chapter` (e.g. a string, or a book without `id`) gives
+  a warning and is ignored; the text then loads as a standalone text.
+  `chapter` without `book` has no effect.
+- To add a whole book, select all its chapter files at once in **Upload text**
+  (or drop them together). Example: [`examples/book-ch1.json`](examples/book-ch1.json)
+  and [`examples/book-ch2.json`](examples/book-ch2.json).
 
 ## `body` — blocks
 

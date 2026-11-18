@@ -21,7 +21,7 @@
   <section id="view-library" class="view" hidden>
     <header class="page-head">
       <h1>My library</h1>
-      <label class="btn primary" title="Add your own text (.json in the Mandarin Reader format)">
+      <label class="btn primary" title="Add your own texts (.json in the Mandarin Reader format); select all chapter files of a book at once">
         ＋ Upload text<input id="lib-file" type="file" accept=".json,application/json" multiple hidden>
       </label>
     </header>
@@ -123,6 +123,7 @@
         <div class="actions">
           <button id="f-review" class="btn">Review text</button>
           <button id="f-restart" class="btn primary">Read again</button>
+          <a id="f-next" class="btn primary" href="#/read" hidden>Next chapter →</a>
         </div>
       </div>
     </div>

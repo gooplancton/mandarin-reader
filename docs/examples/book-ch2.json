@@ -1,0 +1,115 @@
+{
+  "format": "mandarin-reader/segmented-text",
+  "version": 1,
+  "meta": {
+    "id": "example-kitten-2",
+    "title": "小猫的家",
+    "titleTranslation": "The kitten's home",
+    "language": "zh-Hans",
+    "level": {
+      "system": "HSK",
+      "value": "2"
+    },
+    "book": {
+      "id": "example-kitten",
+      "title": "小猫回家"
+    },
+    "chapter": {
+      "number": 2,
+      "title": "小猫的家"
+    },
+    "license": "CC0"
+  },
+  "body": [
+    {
+      "type": "heading",
+      "tokens": "小猫 的 家"
+    },
+    {
+      "type": "paragraph",
+      "tokens": "回到 家 以后 ， 小明 给 小猫 喝 了 一点儿 牛奶 。 妈妈 说 ： “ 这 只 猫 很 干净 ， 应该 有 主人 。 ”"
+    },
+    {
+      "type": "paragraph",
+      "tokens": "第二 天 ， 小明 在 公园 门口 看到 一 张 纸 ， 上面 写 着 ： “ 我 的 白 猫 不见 了 ， 请 帮 我 找 一 找 。 ”"
+    },
+    {
+      "type": "paragraph",
+      "tokens": "纸 上 还 有 一 个 电话 号码 。 小明 马上 给 主人 打 了 电话 。"
+    },
+    {
+      "type": "paragraph",
+      "tokens": "下午 ， 一 个 小 女孩 来到 小明 家 。 她 看见 小猫 ， 高兴 得 跳 了 起来 。"
+    },
+    {
+      "type": "paragraph",
+      "tokens": "女孩 说 ： “ 谢谢 你 ！ 以后 你 可以 常常 来 我 家 看 它 。 ” 小明 笑 了 。"
+    }
+  ],
+  "dictionary": {
+    "小猫": {"py": "xiǎomāo", "pos": "n", "en": ["kitten"]},
+    "的": {"py": "de", "pos": "part", "en": ["(possessive / attributive particle)"]},
+    "家": {"py": "jiā", "pos": "n", "en": ["home", "family"]},
+    "回到": {"py": "huídào", "pos": "v", "en": ["to return to", "to get back to"]},
+    "以后": {"py": "yǐhòu", "pos": "time", "en": ["after", "afterwards", "in the future"]},
+    "小明": {"py": "Xiǎo Míng", "pos": "name", "en": ["Xiao Ming (a boy's name)"]},
+    "给": {"py": "gěi", "pos": "prep", "en": ["to", "for", "to give"]},
+    "喝": {"py": "hē", "pos": "v", "en": ["to drink"]},
+    "了": {"py": "le", "pos": "part", "en": ["(completed action / change of state)"]},
+    "一点儿": {"py": "yìdiǎnr", "pos": "num", "en": ["a little", "a bit"]},
+    "牛奶": {"py": "niúnǎi", "pos": "n", "en": ["milk"]},
+    "妈妈": {"py": "māma", "pos": "n", "en": ["mum", "mother"]},
+    "说": {"py": "shuō", "pos": "v", "en": ["to say", "to speak"]},
+    "这": {"py": "zhè", "pos": "pron", "en": ["this"]},
+    "只": {"py": "zhī", "pos": "mw", "en": ["(measure word for animals)"]},
+    "猫": {"py": "māo", "pos": "n", "en": ["cat"]},
+    "很": {"py": "hěn", "pos": "adv", "en": ["very"]},
+    "干净": {"py": "gānjìng", "pos": "adj", "en": ["clean"]},
+    "应该": {"py": "yīnggāi", "pos": "aux", "en": ["should", "ought to", "probably"]},
+    "有": {"py": "yǒu", "pos": "v", "weight": 0.55, "en": ["to have", "there is / there are"]},
+    "主人": {"py": "zhǔrén", "pos": "n", "en": ["owner", "master"]},
+    "第二": {"py": "dì-èr", "pos": "num", "en": ["second"]},
+    "天": {"py": "tiān", "pos": "n", "en": ["day"]},
+    "在": {"py": "zài", "pos": "prep", "en": ["at", "in", "to be at"]},
+    "公园": {"py": "gōngyuán", "pos": "n", "en": ["park"]},
+    "门口": {"py": "ménkǒu", "pos": "n", "en": ["entrance", "doorway"]},
+    "看到": {"py": "kàndào", "pos": "v", "en": ["to see", "to catch sight of"]},
+    "一": {"py": "yī", "pos": "num", "en": ["one", "a"]},
+    "张": {"py": "zhāng", "pos": "mw", "en": ["(measure word for flat things: paper, tables…)"]},
+    "纸": {"py": "zhǐ", "pos": "n", "en": ["paper", "a sheet of paper"]},
+    "上面": {"py": "shàngmiàn", "pos": "loc", "en": ["on it", "on top", "above"]},
+    "写": {"py": "xiě", "pos": "v", "en": ["to write"]},
+    "着": {"py": "zhe", "pos": "part", "en": ["(ongoing action or state)"]},
+    "我": {"py": "wǒ", "pos": "pron", "en": ["I", "me"]},
+    "白": {"py": "bái", "pos": "adj", "en": ["white"]},
+    "不见": {"py": "bújiàn", "pos": "v", "en": ["to be missing", "to disappear"]},
+    "请": {"py": "qǐng", "pos": "v", "en": ["please", "to ask (someone to do something)"]},
+    "帮": {"py": "bāng", "pos": "v", "en": ["to help"]},
+    "找": {"py": "zhǎo", "pos": "v", "en": ["to look for"]},
+    "上": {"py": "shàng", "pos": "loc", "en": ["on", "on top of"]},
+    "还": {"py": "hái", "pos": "adv", "en": ["also", "in addition", "still"]},
+    "个": {"py": "gè", "pos": "mw", "en": ["(general measure word)"]},
+    "电话": {"py": "diànhuà", "pos": "n", "en": ["telephone", "phone call"]},
+    "号码": {"py": "hàomǎ", "pos": "n", "en": ["number"]},
+    "马上": {"py": "mǎshàng", "pos": "adv", "en": ["at once", "immediately"]},
+    "打": {"py": "dǎ", "pos": "v", "en": ["to make (a phone call)", "to hit"]},
+    "下午": {"py": "xiàwǔ", "pos": "time", "en": ["afternoon"]},
+    "小": {"py": "xiǎo", "pos": "adj", "en": ["small", "little", "young"]},
+    "女孩": {"py": "nǚhái", "pos": "n", "en": ["girl"]},
+    "来到": {"py": "láidào", "pos": "v", "en": ["to arrive at", "to come to"]},
+    "她": {"py": "tā", "pos": "pron", "en": ["she", "her"]},
+    "看见": {"py": "kànjiàn", "pos": "v", "en": ["to see"]},
+    "高兴": {"py": "gāoxìng", "pos": "adj", "en": ["happy", "glad"]},
+    "得": {"py": "de", "pos": "part", "en": ["(links a verb or adjective to its result or degree)"]},
+    "跳": {"py": "tiào", "pos": "v", "en": ["to jump"]},
+    "起来": {"py": "qǐlai", "pos": "comp", "en": ["(up; starting an action)"]},
+    "谢谢": {"py": "xièxie", "pos": "v", "en": ["thank you"]},
+    "你": {"py": "nǐ", "pos": "pron", "en": ["you"]},
+    "可以": {"py": "kěyǐ", "pos": "aux", "en": ["can", "may"]},
+    "常常": {"py": "chángcháng", "pos": "adv", "en": ["often"]},
+    "来": {"py": "lái", "pos": "v", "en": ["to come"]},
+    "看": {"py": "kàn", "pos": "v", "en": ["to look", "to see"]},
+    "它": {"py": "tā", "pos": "pron", "en": ["it"]},
+    "笑": {"py": "xiào", "pos": "v", "en": ["to smile", "to laugh"]}
+  }
+}

@@ -371,7 +371,7 @@ body.dragging #drop-hint { opacity: 1; }
 .missed-list .h { font-size: 20px; }
 .missed-list .py { color: var(--accent); margin: 0 6px; }
 .missed-list .en { color: var(--muted); font-size: 13px; }
-.actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 16px; }
 
 /* ------------------------------------------------------------ app shell */
 
@@ -468,6 +468,40 @@ body.dragging #drop-hint { opacity: 1; }
 .text-status { font-size: 12px; color: var(--muted); margin-top: 4px; }
 .text-card.finished .text-status { color: var(--accent); }
 .text-actions { display: flex; align-items: center; gap: 4px; }
+
+/* a book: one card, expands to its chapters */
+.book-card { flex-wrap: wrap; }
+.book-card .text-main { flex-basis: 0; }
+.chapters { flex-basis: 100%; margin: 2px -4px -4px; border-top: 1px solid var(--line); padding-top: 8px; }
+.chapters > summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--muted);
+  padding: 2px 4px;
+  list-style: none;
+}
+.chapters > summary::-webkit-details-marker { display: none; }
+.chapters > summary::before { content: "▸"; display: inline-block; width: 1.1em; transition: transform 0.15s; }
+.chapters[open] > summary::before { transform: rotate(90deg); }
+.chapter-list { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 2px; }
+.chapter { display: flex; align-items: center; gap: 4px; border-radius: 8px; }
+.chapter.current { background: var(--accent-soft); }
+.chapter-main { flex: 1; min-width: 0; display: block; padding: 6px 4px 8px 8px; color: inherit; text-decoration: none; }
+.chapter-line { display: flex; align-items: baseline; gap: 8px; }
+.chapter-title {
+  flex: 1;
+  min-width: 0;
+  font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chapter-status { font-size: 12px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.chapter.finished .chapter-status { color: var(--accent); }
+.text-progress.thin { display: block; height: 3px; margin-top: 5px; }
+.text-progress.thin span { display: block; height: 100%; background: var(--accent); }
+.chapter .menu summary { border-color: transparent; background: none; }
 .menu { position: relative; }
 .menu summary { list-style: none; }
 .menu summary::-webkit-details-marker { display: none; }

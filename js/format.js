@@ -84,6 +84,7 @@ function normalize(doc) {
   const warnings = [];
   const meta = Object.assign({ id: null, title: 'Untitled', language: 'zh-Hans' }, doc.meta || {});
   if (!meta.id) meta.id = 'text-' + hashString(JSON.stringify(doc.body || []));
+  normalizeBookMeta(meta, warnings);
   const dictionary = doc.dictionary && typeof doc.dictionary === 'object' ? doc.dictionary : {};
 
   if (!Array.isArray(doc.body)) throw new Error('"body" must be an array of blocks');
@@ -110,6 +111,56 @@ function normalize(doc) {
     warnings.push(`No dictionary entry for: ${[...missing].join(' ')}`);
   }
   return { meta, dictionary, blocks, warnings, raw: doc };
+}
+
+/*
+ * Books and chapters (optional): meta.book = { id, title, titleTranslation?, author? },
+ * meta.chapter = { number?, title? }. A bad shape is reported and the field dropped;
+ * unknown sub-fields are kept.
+ */
+const isText = (v) => typeof v === 'string' && v.trim() !== '';
+
+function normalizeBookMeta(meta, warnings) {
+  if (meta.book == null) delete meta.book;
+  else {
+    const b = meta.book;
+    if (!b || typeof b !== 'object' || Array.isArray(b)) {
+      warnings.push('meta.book must be an object like { "id": …, "title": … }; ignored');
+      delete meta.book;
+    } else if (!isText(b.id) || !isText(b.title)) {
+      warnings.push('meta.book needs a non-empty "id" and "title"; ignored');
+      delete meta.book;
+    } else {
+      const book = Object.assign({}, b, { id: b.id.trim(), title: b.title });
+      for (const k of ['titleTranslation', 'author']) {
+        if (book[k] !== undefined && !isText(book[k])) {
+          warnings.push(`meta.book.${k} must be a string; ignored`);
+          delete book[k];
+        }
+      }
+      meta.book = book;
+    }
+  }
+  if (meta.chapter == null) delete meta.chapter;
+  else {
+    const c = meta.chapter;
+    if (!c || typeof c !== 'object' || Array.isArray(c)) {
+      warnings.push('meta.chapter must be an object like { "number": 1, "title": … }; ignored');
+      delete meta.chapter;
+    } else {
+      const ch = Object.assign({}, c);
+      if (ch.number !== undefined && !(typeof ch.number === 'number' && Number.isFinite(ch.number))) {
+        warnings.push('meta.chapter.number must be a number; ignored');
+        delete ch.number;
+      }
+      if (ch.title !== undefined && !isText(ch.title)) {
+        warnings.push('meta.chapter.title must be a string; ignored');
+        delete ch.title;
+      }
+      meta.chapter = ch;
+      if (!meta.book) warnings.push('meta.chapter has no effect without meta.book');
+    }
+  }
 }
 
 /** Look up a dictionary entry; normalizes "en" to an array. */

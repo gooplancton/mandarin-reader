@@ -8,6 +8,8 @@ import { $, h, toast, speak, canSpeak, buzz, contextEl, formatDuration } from '.
 
 let reader = null;
 let currentId = null;
+let nextChapterId = null;
+let displayTitle = '';
 let selectedTok = null;
 let initialized = false;
 const els = {};
@@ -85,6 +87,7 @@ export async function show(id) {
   id = id || prefs.get('lastText', null);
   if (id && id === currentId && reader) {
     requestAnimationFrame(() => reader.scrollToCursor(true));
+    showHeader(id, reader.doc); // chapters may have been added or removed meanwhile
     return;
   }
   closeSheet();
@@ -112,11 +115,7 @@ export async function show(id) {
   prefs.set('lastText', id);
   library.markOpened(id);
 
-  els.title.textContent = doc.meta.title;
-  const bits = [];
-  if (doc.meta.titleTranslation) bits.push(doc.meta.titleTranslation);
-  if (doc.meta.level) bits.push(`${doc.meta.level.system || ''} ${doc.meta.level.value || ''}`.trim());
-  els.meta.textContent = bits.join(' · ');
+  await showHeader(id, doc);
 
   const saved = await library.getProgress(id);
   reader = new Reader(
@@ -133,6 +132,31 @@ export async function show(id) {
   );
   updateStats(reader);
   requestAnimationFrame(() => reader.scrollToCursor(true));
+}
+
+/** Title and meta line; for a chapter of a book: "茶馆 · 第一幕" / "Ch. 1 of 3 · Teahouse". */
+async function showHeader(id, doc) {
+  const m = doc.meta;
+  const book = m.book ? await library.bookFor(id) : null;
+  const bits = [];
+  nextChapterId = null;
+  if (book) {
+    const chapterTitle = (m.chapter && m.chapter.title) || m.title;
+    displayTitle = chapterTitle && chapterTitle !== book.title ? `${book.title} · ${chapterTitle}` : book.title;
+    const n = book.chapters.length;
+    const pos = book.chapters.findIndex((c) => c.id === id);
+    const num = m.chapter && m.chapter.number;
+    bits.push(typeof num === 'number' ? `Ch. ${num} of ${n}` : `Part ${pos + 1} of ${n}`);
+    if (book.titleTranslation) bits.push(book.titleTranslation);
+    if (pos >= 0 && pos + 1 < n) nextChapterId = book.chapters[pos + 1].id;
+  } else {
+    displayTitle = m.title;
+    if (m.titleTranslation) bits.push(m.titleTranslation);
+  }
+  if (m.level) bits.push(`${m.level.system || ''} ${m.level.value || ''}`.trim());
+  els.title.textContent = displayTitle;
+  els.title.title = displayTitle;
+  els.meta.textContent = bits.join(' · ');
 }
 
 export function hide() {
@@ -190,7 +214,7 @@ function wordInfo(tok) {
 }
 
 function contextOf(tok) {
-  return Object.assign(reader.contextFor(tok), { textId: currentId, textTitle: reader.doc.meta.title });
+  return Object.assign(reader.contextFor(tok), { textId: currentId, textTitle: displayTitle || reader.doc.meta.title });
 }
 
 function showWord(r, tok) {
@@ -284,6 +308,11 @@ function showFinish(r) {
       return h('li', null, h('span.h', null, t.text), ' ', h('span.py', null, e ? e.py : ''), ' ', h('span.en', null, e ? e.en.join('; ') : ''));
     })
   );
+  const nextBtn = $('#f-next');
+  nextBtn.hidden = !nextChapterId;
+  if (nextChapterId) nextBtn.href = '#/read/' + encodeURIComponent(nextChapterId);
+  $('#f-restart').classList.toggle('primary', !nextChapterId);
+
   const btn = $('#f-add-missed');
   btn.disabled = false;
   btn.textContent = '＋ Add these to cards';
