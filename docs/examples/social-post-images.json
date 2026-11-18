@@ -115,7 +115,7 @@
       "hsk": "1"
     },
     "一起": {
-      "py": "yìqǐ",
+      "py": "yīqǐ",
       "pos": "adv",
       "en": "together",
       "hsk": "2"
@@ -270,6 +270,7 @@
       "py": "lèisǐ",
       "pos": "adj",
       "en": "dead tired, exhausted",
+      "parts": ["累", "死"],
       "notes": "累 tired + 死 \"to death\" (complement of degree, colloquial)"
     },
     "不过": {
@@ -504,7 +505,8 @@
     "说实话": {
       "py": "shuō shíhuà",
       "pos": "idiom",
-      "en": "to be honest, frankly"
+      "en": "to be honest, frankly",
+      "parts": ["说", "实话"]
     },
     "这": {
       "py": "zhè",

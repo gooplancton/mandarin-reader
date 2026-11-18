@@ -56,7 +56,7 @@
     "给": {"py": "gěi", "pos": "prep", "en": ["to", "for", "to give"]},
     "喝": {"py": "hē", "pos": "v", "en": ["to drink"]},
     "了": {"py": "le", "pos": "part", "en": ["(completed action / change of state)"]},
-    "一点儿": {"py": "yìdiǎnr", "pos": "num", "en": ["a little", "a bit"]},
+    "一点儿": {"py": "yīdiǎnr", "pos": "num", "en": ["a little", "a bit"]},
     "牛奶": {"py": "niúnǎi", "pos": "n", "en": ["milk"]},
     "妈妈": {"py": "māma", "pos": "n", "en": ["mum", "mother"]},
     "说": {"py": "shuō", "pos": "v", "en": ["to say", "to speak"]},

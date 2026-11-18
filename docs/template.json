@@ -7,7 +7,8 @@
     "titleTranslation": "My first text",
     "language": "zh-Hans",
     "level": { "system": "HSK", "value": "2" },
-    "author": "Your name"
+    "author": "Your name",
+    "license": "CC0-1.0"
   },
   "body": [
     { "type": "heading", "tokens": "我 的 周末" },
@@ -36,7 +37,7 @@
     "聊": { "py": "liáo", "pos": "v", "en": ["to chat"] },
     "很": { "py": "hěn", "pos": "adv", "en": ["very"] },
     "久": { "py": "jiǔ", "pos": "adj", "en": ["long (time)"] },
-    "差不多": { "py": "chàbuduō", "pos": "adv", "en": ["almost", "about"] },
+    "差不多": { "py": "chàbuduō", "pos": "adv", "parts": ["差", "不多"], "en": ["almost", "about"] },
     "三": { "py": "sān", "pos": "num", "en": ["three"] },
     "小时": { "py": "xiǎoshí", "pos": "n", "en": ["hour"] }
   }

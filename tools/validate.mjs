@@ -337,6 +337,11 @@ function checkYiBu(base, py, where) {
 const hskCounts = {};
 const normKey = (k) => k.normalize('NFKC').replace(/[·\s]/g, '').toLowerCase();
 const byNorm = new Map();
+// Keys named in another entry's "parts" are used too: the reader shows them as part glosses.
+const partKeys = new Set(
+  Object.values(dict).flatMap((e) => (isObj(e) && Array.isArray(e.parts) ? e.parts : []))
+);
+
 for (const [key, e] of Object.entries(dict)) {
   const where = `dictionary["${key}"]`;
   if (!isObj(e)) {
@@ -351,7 +356,7 @@ for (const [key, e] of Object.entries(dict)) {
   const hash = key.indexOf('#');
   const base = hash > 0 ? key.slice(0, hash) : key;
   if (hash > 0 && dict[base]) warn(where, `both "${base}" and "${key}" exist — once a word needs senses, give every occurrence a #sense`);
-  if (!usedKeys.has(key)) warn(where, 'unused (no token refers to it)');
+  if (!usedKeys.has(key) && !partKeys.has(key)) warn(where, 'unused (no token or "parts" list refers to it)');
 
   const han = (base.match(HAN_G) || []).length;
   const hasLatinOrDigit = /[\p{Script=Latin}\p{N}]/u.test(base);
