@@ -1,7 +1,7 @@
 /* "My library": example texts and uploads, with reading progress; upload, backup, restore. */
 import * as library from '../library.js';
 import * as db from '../db.js';
-import { $, h, toast, download } from '../ui.js';
+import { $, h, toast, download, bylineText } from '../ui.js';
 
 let initialized = false;
 
@@ -114,11 +114,12 @@ function textCard(item) {
       { href: item.error ? null : href },
       h('div.text-title', { lang: 'zh' }, m.title || item.id),
       m.titleTranslation ? h('div.text-sub', null, m.titleTranslation) : null,
+      bylineText(m) ? h('div.text-by', null, bylineText(m)) : null,
       h(
         'div.text-info',
         null,
         level ? h('span.tag', null, level) : null,
-        item.builtIn ? h('span.tag.neutral', null, 'Example') : null,
+        item.builtIn ? h('span.tag.neutral', null, 'Included') : null,
         item.error ? h('span', null, item.error) : h('span', null, `${item.words} words · ${item.chars} characters`)
       ),
       h('div.text-progress', null, h('div', { style: { width: pct + '%' } })),
@@ -219,7 +220,7 @@ function bookCard(book) {
         'div.text-info',
         null,
         level ? h('span.tag', null, level) : null,
-        allBuiltIn ? h('span.tag.neutral', null, 'Example') : null,
+        allBuiltIn ? h('span.tag.neutral', null, 'Included') : null,
         h('span', null, [book.author, plural(chs.length, 'chapter'), `${words} words`].filter(Boolean).join(' · '))
       ),
       h('div.text-progress', null, h('div', { style: { width: pct + '%' } })),

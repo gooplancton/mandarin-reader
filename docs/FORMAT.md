@@ -34,7 +34,15 @@ sentences, which looking words up in one big dictionary can't handle.
 | `titleTranslation` | string                        | optional                                                   |
 | `language`         | BCP-47 string                 | `zh-Hans` (default) or `zh-Hant`                           |
 | `level`            | `{ "system", "value" }`       | e.g. `{ "system": "HSK", "value": "6" }`                   |
-| `author`, `source`, `license`, `tags` | any         | optional                                                   |
+| `author`, `tags`  | string, string[]              | optional                                                   |
+| `source`           | `{ url, name, author, published, retrieved }` | Where the text comes from. `name` is the site or platform, dates are ISO. |
+| `license`          | string                        | SPDX id, e.g. `CC-BY-4.0`, `CC-BY-NC-4.0`, `CC0-1.0`, or `All rights reserved` for private texts. |
+| `licenseUrl`       | URL                           | Link to the license (derived automatically for Creative Commons ids). |
+| `modifications`    | string                        | What was changed from the original, e.g. "Segmented into words and glossed…". |
+
+The reader shows a credit line under every text built from `source`, `license`
+and `modifications`, as Creative Commons licenses require. The library card
+shows "by *author* · *site*".
 | `book`             | `{ "id", "title", "titleTranslation"?, "author"? }` | optional: the book this text is a chapter of (see below) |
 | `chapter`          | `{ "number"?, "title"? }`     | optional: position and title of the chapter within its book |
 

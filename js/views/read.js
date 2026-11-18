@@ -4,7 +4,7 @@ import * as fmt from '../format.js';
 import * as library from '../library.js';
 import * as flashcards from '../flashcards.js';
 import { prefs } from '../db.js';
-import { $, h, toast, speak, canSpeak, buzz, contextEl, formatDuration } from '../ui.js';
+import { $, h, toast, speak, canSpeak, buzz, contextEl, formatDuration, attributionEl } from '../ui.js';
 
 let reader = null;
 let currentId = null;
@@ -109,6 +109,7 @@ export async function show(id) {
   if (!doc) {
     els.title.textContent = '';
     els.meta.textContent = '';
+    $('#read-source').replaceChildren();
     if (id) prefs.set('lastText', null);
     return;
   }
@@ -160,6 +161,8 @@ async function showHeader(id, doc) {
   els.title.textContent = displayTitle;
   els.title.title = displayTitle;
   els.meta.textContent = bits.join(' · ');
+  const credit = attributionEl(m);
+  $('#read-source').replaceChildren(...(credit ? [credit] : []));
 }
 
 export function hide() {
