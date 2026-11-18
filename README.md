@@ -60,6 +60,20 @@ Run `tools/build.mjs` before committing. It writes the file list and a content
 hash into `sw.js`, and that hash is how installed copies notice a new version
 (they show a *Reload* prompt).
 
+### Adding texts
+
+```sh
+node tools/validate.mjs texts/my-text.json --source my-text.txt [--strict]
+```
+
+`tools/validate.mjs` checks a text file against the format: dictionary
+coverage, pinyin, parts of speech, soft boundaries, image blocks, book/chapter
+meta, and (with `--source`) that the tokens reproduce the raw text exactly.
+`--skeleton` prints stub entries for missing dictionary keys.
+To turn raw Chinese into a text, ask Claude Code: the project skill
+[`chinese-text-to-json`](.claude/skills/chinese-text-to-json/SKILL.md) holds the
+segmentation and glossary conventions, attribution and copyright rules.
+
 ```
 index.html              app shell (all views) + tab bar
 manifest.webmanifest    PWA manifest          sw.js   offline cache (generated list)
@@ -74,4 +88,6 @@ js/srs.js               spaced-repetition scheduler
 js/db.js                IndexedDB storage, backup/restore, migration from the first prototype
 texts/*.json            example texts (bundled into texts/library.js)
 tools/build.mjs         build step
+tools/validate.mjs      text-file validator
+.claude/skills/         Claude Code skill: raw Chinese → segmented JSON
 ```
