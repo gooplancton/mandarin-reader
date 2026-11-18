@@ -1,0 +1,619 @@
+{
+  "format": "mandarin-reader/segmented-text",
+  "version": 1,
+  "meta": {
+    "id": "example-social-post-hike",
+    "title": "周末爬山",
+    "titleTranslation": "Weekend hike (a social media post)",
+    "language": "zh-Hans",
+    "level": {
+      "system": "HSK",
+      "value": "3–4"
+    },
+    "author": "Original text written for Mandarin Reader",
+    "license": "CC0-1.0",
+    "tags": [
+      "social media",
+      "daily life",
+      "images"
+    ]
+  },
+  "body": [
+    {
+      "type": "paragraph",
+      "tokens": "周末 终于 有 时间 了 ！ 我 和 两 个 朋友 一起 去 爬山 ， 早上 六 点 就 出发 了 。"
+    },
+    {
+      "type": "paragraph",
+      "tokens": "山 不 太 高 ， 但是 路 很 难 走 。 我们 走 了 三 个 多 小时 才 到 山顶 ， 累·死 了 ！ 不过 上面 的 风景 真的 太 美 了 ， 你们 看 ："
+    },
+    {
+      "type": "image",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400' width='600' height='400'%3E%3Cdefs%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23f7b267'/%3E%3Cstop offset='1' stop-color='%23fde8c8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='600' height='400' fill='url(%23s)'/%3E%3Ccircle cx='430' cy='150' r='46' fill='%23fff4d6'/%3E%3Cpath d='M0 290 L110 170 L190 240 L300 120 L410 250 L480 190 L600 280 V400 H0 Z' fill='%238a9bb0'/%3E%3Cpath d='M300 120 L330 152 L312 150 L300 162 L286 148 L270 154 Z' fill='%23f4f1ea'/%3E%3Cpath d='M0 330 L90 260 L170 310 L260 230 L360 320 L460 260 L600 330 V400 H0 Z' fill='%234f6d5a'/%3E%3Cpath d='M0 370 Q150 330 300 360 T600 350 V400 H0 Z' fill='%232f4a3a'/%3E%3Cg fill='%232a2620'%3E%3Ccircle cx='262' cy='216' r='5'/%3E%3Crect x='259' y='221' width='6' height='12' rx='2'/%3E%3C/g%3E%3C/svg%3E",
+      "alt": "Drawing: a hiker on a ridge, mountains in layers under an orange evening sky",
+      "caption": "从 山顶 往 下 看 的 样子 。 比 照片 里 还 美 ！",
+      "credit": "Illustration: Mandarin Reader, CC0",
+      "width": 600,
+      "height": 400
+    },
+    {
+      "type": "paragraph",
+      "tokens": "下山 以后 ， 我们 饿 得 不行 ， 就 在 山 下 找 了 一 家#mw 小 面馆 。 老板 说 ， 他们 家#n 的 牛肉·面 已经 做 了 二十 年 了 。"
+    },
+    {
+      "type": "image",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 450' width='600' height='450'%3E%3Crect width='600' height='450' fill='%23c98b5a'/%3E%3Cg stroke='%23b5764a' stroke-width='3'%3E%3Cline x1='0' y1='90' x2='600' y2='90'/%3E%3Cline x1='0' y1='200' x2='600' y2='200'/%3E%3Cline x1='0' y1='330' x2='600' y2='330'/%3E%3C/g%3E%3Cellipse cx='300' cy='250' rx='210' ry='150' fill='%23f3efe6'/%3E%3Cellipse cx='300' cy='240' rx='180' ry='122' fill='%232f6f8f'/%3E%3Cellipse cx='300' cy='240' rx='164' ry='108' fill='%23c4632f'/%3E%3Cg fill='none' stroke='%23f2d38a' stroke-width='7' stroke-linecap='round'%3E%3Cpath d='M170 230 q30 -30 60 0 t60 0 t60 0 t60 0'/%3E%3Cpath d='M180 260 q30 -30 60 0 t60 0 t60 0 t50 0'/%3E%3Cpath d='M200 290 q30 -25 50 0 t50 0 t50 0 t50 0'/%3E%3C/g%3E%3Cg fill='%237a3b22'%3E%3Cellipse cx='250' cy='200' rx='34' ry='18'/%3E%3Cellipse cx='330' cy='190' rx='30' ry='16'/%3E%3Cellipse cx='370' cy='260' rx='32' ry='17'/%3E%3C/g%3E%3Cg fill='%235fa04e'%3E%3Ccircle cx='210' cy='250' r='7'/%3E%3Ccircle cx='290' cy='270' r='6'/%3E%3Ccircle cx='410' cy='220' r='7'/%3E%3Ccircle cx='300' cy='230' r='5'/%3E%3C/g%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='5' stroke-linecap='round' opacity='0.7'%3E%3Cpath d='M240 90 q-15 -20 0 -40 t0 -40'/%3E%3Cpath d='M300 80 q-15 -20 0 -40 t0 -40'/%3E%3Cpath d='M360 90 q-15 -20 0 -40 t0 -40'/%3E%3C/g%3E%3C/svg%3E",
+      "alt": "Drawing: a bowl of beef noodle soup with green onions, seen from above",
+      "width": 600,
+      "height": 450
+    },
+    {
+      "type": "paragraph",
+      "tokens": "说·实话 ， 这 是 我 今年 吃 过 的 最 好吃 的 一 碗 面 ！ 下次 还 想 再 去 。 你们 周末 都 干 什么 了 ？ 在 评论 里 告诉 我 吧 ～"
+    }
+  ],
+  "dictionary": {
+    "周末": {
+      "py": "zhōumò",
+      "pos": "n",
+      "en": "weekend",
+      "hsk": "3"
+    },
+    "终于": {
+      "py": "zhōngyú",
+      "pos": "adv",
+      "en": "finally, at last",
+      "hsk": "3"
+    },
+    "有": {
+      "py": "yǒu",
+      "pos": "v",
+      "en": "to have; there is",
+      "hsk": "1",
+      "weight": 0.55
+    },
+    "时间": {
+      "py": "shíjiān",
+      "pos": "n",
+      "en": "time",
+      "hsk": "2"
+    },
+    "了": {
+      "py": "le",
+      "pos": "part",
+      "en": "particle: completed action / change of state",
+      "hsk": "1"
+    },
+    "我": {
+      "py": "wǒ",
+      "pos": "pron",
+      "en": "I, me",
+      "hsk": "1"
+    },
+    "和": {
+      "py": "hé",
+      "pos": "conj",
+      "en": "and, with",
+      "hsk": "1"
+    },
+    "两": {
+      "py": "liǎng",
+      "pos": "num",
+      "en": "two",
+      "hsk": "2"
+    },
+    "个": {
+      "py": "gè",
+      "pos": "mw",
+      "en": "general measure word",
+      "hsk": "1"
+    },
+    "朋友": {
+      "py": "péngyou",
+      "pos": "n",
+      "en": "friend",
+      "hsk": "1"
+    },
+    "一起": {
+      "py": "yìqǐ",
+      "pos": "adv",
+      "en": "together",
+      "hsk": "2"
+    },
+    "去": {
+      "py": "qù",
+      "pos": "v",
+      "en": "to go",
+      "hsk": "1"
+    },
+    "爬山": {
+      "py": "pá shān",
+      "pos": "v",
+      "en": [
+        "to hike",
+        "to climb a mountain"
+      ],
+      "hsk": "3"
+    },
+    "早上": {
+      "py": "zǎoshang",
+      "pos": "time",
+      "en": "early morning",
+      "hsk": "2"
+    },
+    "六": {
+      "py": "liù",
+      "pos": "num",
+      "en": "six",
+      "hsk": "1"
+    },
+    "点": {
+      "py": "diǎn",
+      "pos": "mw",
+      "en": "o'clock",
+      "hsk": "1"
+    },
+    "就": {
+      "py": "jiù",
+      "pos": "adv",
+      "en": [
+        "already (earlier than expected)",
+        "then"
+      ],
+      "hsk": "2"
+    },
+    "出发": {
+      "py": "chūfā",
+      "pos": "v",
+      "en": "to set off, to start out",
+      "hsk": "4"
+    },
+    "山": {
+      "py": "shān",
+      "pos": "n",
+      "en": "mountain, hill",
+      "hsk": "3"
+    },
+    "不": {
+      "py": "bù",
+      "pos": "adv",
+      "en": "not",
+      "hsk": "1"
+    },
+    "太": {
+      "py": "tài",
+      "pos": "adv",
+      "en": [
+        "too",
+        "very, so"
+      ],
+      "hsk": "1"
+    },
+    "高": {
+      "py": "gāo",
+      "pos": "adj",
+      "en": "high, tall",
+      "hsk": "2"
+    },
+    "但是": {
+      "py": "dànshì",
+      "pos": "conj",
+      "en": "but",
+      "hsk": "2"
+    },
+    "路": {
+      "py": "lù",
+      "pos": "n",
+      "en": "road, path, way",
+      "hsk": "2"
+    },
+    "很": {
+      "py": "hěn",
+      "pos": "adv",
+      "en": "very",
+      "hsk": "1"
+    },
+    "难": {
+      "py": "nán",
+      "pos": "adj",
+      "en": "difficult, hard",
+      "hsk": "3"
+    },
+    "走": {
+      "py": "zǒu",
+      "pos": "v",
+      "en": "to walk, to go",
+      "hsk": "2"
+    },
+    "我们": {
+      "py": "wǒmen",
+      "pos": "pron",
+      "en": "we, us",
+      "hsk": "1"
+    },
+    "三": {
+      "py": "sān",
+      "pos": "num",
+      "en": "three",
+      "hsk": "1"
+    },
+    "多": {
+      "py": "duō",
+      "pos": "num",
+      "en": "more than, and a bit (after a number + measure word)",
+      "hsk": "1"
+    },
+    "小时": {
+      "py": "xiǎoshí",
+      "pos": "n",
+      "en": "hour",
+      "hsk": "2"
+    },
+    "才": {
+      "py": "cái",
+      "pos": "adv",
+      "en": "only then, not until",
+      "hsk": "3"
+    },
+    "到": {
+      "py": "dào",
+      "pos": "v",
+      "en": "to arrive, to reach",
+      "hsk": "2"
+    },
+    "山顶": {
+      "py": "shāndǐng",
+      "pos": "n",
+      "en": "mountaintop, summit"
+    },
+    "累死": {
+      "py": "lèisǐ",
+      "pos": "adj",
+      "en": "dead tired, exhausted",
+      "notes": "累 tired + 死 \"to death\" (complement of degree, colloquial)"
+    },
+    "不过": {
+      "py": "búguò",
+      "pos": "conj",
+      "en": "but, however",
+      "hsk": "4"
+    },
+    "上面": {
+      "py": "shàngmian",
+      "pos": "loc",
+      "en": "on top, up there",
+      "hsk": "3"
+    },
+    "的": {
+      "py": "de",
+      "pos": "part",
+      "en": "possessive / attributive particle",
+      "hsk": "1"
+    },
+    "风景": {
+      "py": "fēngjǐng",
+      "pos": "n",
+      "en": "scenery, view",
+      "hsk": "4"
+    },
+    "真的": {
+      "py": "zhēnde",
+      "pos": "adv",
+      "en": "really, truly",
+      "hsk": "2"
+    },
+    "美": {
+      "py": "měi",
+      "pos": "adj",
+      "en": "beautiful",
+      "hsk": "4"
+    },
+    "你们": {
+      "py": "nǐmen",
+      "pos": "pron",
+      "en": "you (plural)",
+      "hsk": "1"
+    },
+    "看": {
+      "py": "kàn",
+      "pos": "v",
+      "en": "to look, to see",
+      "hsk": "1"
+    },
+    "从": {
+      "py": "cóng",
+      "pos": "prep",
+      "en": "from",
+      "hsk": "2"
+    },
+    "往": {
+      "py": "wǎng",
+      "pos": "prep",
+      "en": "towards, in the direction of",
+      "hsk": "2"
+    },
+    "下": {
+      "py": "xià",
+      "pos": "loc",
+      "en": [
+        "down",
+        "below, under"
+      ],
+      "hsk": "1"
+    },
+    "样子": {
+      "py": "yàngzi",
+      "pos": "n",
+      "en": "appearance, how something looks",
+      "hsk": "4"
+    },
+    "比": {
+      "py": "bǐ",
+      "pos": "prep",
+      "en": "than, compared with",
+      "hsk": "2"
+    },
+    "照片": {
+      "py": "zhàopiàn",
+      "pos": "n",
+      "en": "photo, picture",
+      "hsk": "3"
+    },
+    "里": {
+      "py": "lǐ",
+      "pos": "loc",
+      "en": "in, inside",
+      "hsk": "1"
+    },
+    "还": {
+      "py": "hái",
+      "pos": "adv",
+      "en": "even (more), still",
+      "hsk": "2"
+    },
+    "下山": {
+      "py": "xià shān",
+      "pos": "v",
+      "en": "to go down the mountain"
+    },
+    "以后": {
+      "py": "yǐhòu",
+      "pos": "time",
+      "en": "after, afterwards",
+      "hsk": "3"
+    },
+    "饿": {
+      "py": "è",
+      "pos": "adj",
+      "en": "hungry",
+      "hsk": "3"
+    },
+    "得": {
+      "py": "de",
+      "pos": "part",
+      "en": "particle linking a verb/adjective to a complement of degree",
+      "hsk": "2"
+    },
+    "不行": {
+      "py": "bùxíng",
+      "pos": "adv",
+      "en": "extremely, terribly (after 得)",
+      "hsk": "4"
+    },
+    "在": {
+      "py": "zài",
+      "pos": "prep",
+      "en": "at, in",
+      "hsk": "1"
+    },
+    "找": {
+      "py": "zhǎo",
+      "pos": "v",
+      "en": "to look for, to find",
+      "hsk": "2"
+    },
+    "一": {
+      "py": "yī",
+      "pos": "num",
+      "en": "one, a",
+      "hsk": "1"
+    },
+    "家#mw": {
+      "py": "jiā",
+      "pos": "mw",
+      "en": "measure word for shops, restaurants, companies",
+      "hsk": "1"
+    },
+    "家#n": {
+      "py": "jiā",
+      "pos": "n",
+      "en": [
+        "home, family; (someone's) place",
+        "他们家 = their place, their shop"
+      ],
+      "hsk": "1"
+    },
+    "小": {
+      "py": "xiǎo",
+      "pos": "adj",
+      "en": "small, little",
+      "hsk": "1"
+    },
+    "面馆": {
+      "py": "miànguǎn",
+      "pos": "n",
+      "en": "noodle shop"
+    },
+    "老板": {
+      "py": "lǎobǎn",
+      "pos": "n",
+      "en": "boss, shop owner",
+      "hsk": "5"
+    },
+    "说": {
+      "py": "shuō",
+      "pos": "v",
+      "en": "to say, to speak",
+      "hsk": "1"
+    },
+    "他们": {
+      "py": "tāmen",
+      "pos": "pron",
+      "en": "they, them",
+      "hsk": "1"
+    },
+    "牛肉面": {
+      "py": "niúròumiàn",
+      "pos": "n",
+      "en": "beef noodle soup",
+      "parts": [
+        "牛肉",
+        "面"
+      ]
+    },
+    "牛肉": {
+      "py": "niúròu",
+      "pos": "n",
+      "en": "beef",
+      "hsk": "2"
+    },
+    "已经": {
+      "py": "yǐjīng",
+      "pos": "adv",
+      "en": "already",
+      "hsk": "2"
+    },
+    "做": {
+      "py": "zuò",
+      "pos": "v",
+      "en": "to make, to do",
+      "hsk": "1"
+    },
+    "二十": {
+      "py": "èrshí",
+      "pos": "num",
+      "en": "twenty",
+      "hsk": "1"
+    },
+    "年": {
+      "py": "nián",
+      "pos": "n",
+      "en": "year",
+      "hsk": "1"
+    },
+    "说实话": {
+      "py": "shuō shíhuà",
+      "pos": "idiom",
+      "en": "to be honest, frankly"
+    },
+    "这": {
+      "py": "zhè",
+      "pos": "pron",
+      "en": "this",
+      "hsk": "1"
+    },
+    "是": {
+      "py": "shì",
+      "pos": "v",
+      "en": "to be",
+      "hsk": "1",
+      "weight": 0.55
+    },
+    "今年": {
+      "py": "jīnnián",
+      "pos": "time",
+      "en": "this year",
+      "hsk": "1"
+    },
+    "吃": {
+      "py": "chī",
+      "pos": "v",
+      "en": "to eat",
+      "hsk": "1"
+    },
+    "过": {
+      "py": "guo",
+      "pos": "part",
+      "en": "particle: have done (experience)",
+      "hsk": "2"
+    },
+    "最": {
+      "py": "zuì",
+      "pos": "adv",
+      "en": "most",
+      "hsk": "2"
+    },
+    "好吃": {
+      "py": "hǎochī",
+      "pos": "adj",
+      "en": "delicious, tasty",
+      "hsk": "2"
+    },
+    "碗": {
+      "py": "wǎn",
+      "pos": "mw",
+      "en": "bowl (measure word)",
+      "hsk": "3"
+    },
+    "面": {
+      "py": "miàn",
+      "pos": "n",
+      "en": "noodles",
+      "hsk": "2"
+    },
+    "下次": {
+      "py": "xià cì",
+      "pos": "time",
+      "en": "next time",
+      "hsk": "2"
+    },
+    "想": {
+      "py": "xiǎng",
+      "pos": "aux",
+      "en": "to want to, would like to",
+      "hsk": "1"
+    },
+    "再": {
+      "py": "zài",
+      "pos": "adv",
+      "en": "again",
+      "hsk": "2"
+    },
+    "都": {
+      "py": "dōu",
+      "pos": "adv",
+      "en": "all, each",
+      "hsk": "1"
+    },
+    "干": {
+      "py": "gàn",
+      "pos": "v",
+      "en": "to do (colloquial)",
+      "hsk": "4"
+    },
+    "什么": {
+      "py": "shénme",
+      "pos": "pron",
+      "en": "what",
+      "hsk": "1"
+    },
+    "评论": {
+      "py": "pínglùn",
+      "pos": "n",
+      "en": "comments (on a post)",
+      "hsk": "5"
+    },
+    "告诉": {
+      "py": "gàosu",
+      "pos": "v",
+      "en": "to tell",
+      "hsk": "2"
+    },
+    "吧": {
+      "py": "ba",
+      "pos": "part",
+      "en": "particle: suggestion, soft request",
+      "hsk": "2"
+    }
+  }
+}

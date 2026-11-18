@@ -13,6 +13,9 @@ export function isBuiltIn(id) {
   return builtIn.has(id);
 }
 
+// Built-in texts are bundled from texts/*.json, so their relative image paths resolve against texts/.
+const normalizeFor = (id, raw) => fmt.normalize(raw, builtIn.has(id) ? { base: 'texts/' } : {});
+
 async function rawDoc(id) {
   if (builtIn.has(id)) return builtIn.get(id);
   const rec = await db.texts.get(id);
@@ -24,7 +27,7 @@ export async function getDoc(id) {
   if (normalizedCache.has(id)) return normalizedCache.get(id);
   const raw = await rawDoc(id);
   if (!raw) return null;
-  const doc = fmt.normalize(raw);
+  const doc = normalizeFor(id, raw);
   doc.meta.id = id; // the id it is stored under wins (uploads may have been renamed)
   normalizedCache.set(id, doc);
   return doc;
@@ -36,7 +39,7 @@ function summarize(id, raw, extra) {
   let error = null;
   let meta = raw.meta || {};
   try {
-    const doc = fmt.normalize(raw);
+    const doc = normalizeFor(id, raw);
     meta = doc.meta;
     for (const b of doc.blocks)
       for (const t of b.tokens) {
