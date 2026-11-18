@@ -202,3 +202,17 @@ Example texts live in `texts/*.json`. `node tools/build.mjs` bundles them into
 `texts/library.js`, which the app imports. Users add their own texts with
 **Upload text** in the library. Uploaded texts are validated and stored on the
 device (IndexedDB).
+
+## Making texts from raw Chinese
+
+Converting a raw text (article, post, chapter) into this format is done with
+the Claude Code skill [`.claude/skills/chinese-text-to-json`](../.claude/skills/chinese-text-to-json/SKILL.md):
+segmentation and dictionary conventions (taken from `texts/xiangzi-shudian.json`),
+meta/attribution, books and chapters, copyright. Check any file with
+
+```sh
+node tools/validate.mjs my-text.json [--source my-text.txt] [--strict]
+```
+
+`--source` checks that the tokens reproduce the raw text exactly. See
+[`docs/examples/skill-demo.json`](examples/skill-demo.json) for a social-media example.
